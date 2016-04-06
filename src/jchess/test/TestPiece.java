@@ -145,7 +145,14 @@ public class TestPiece {
         assertEquals(Colors.WHITE, b1.getPlayer().getColor());
 
         assertEquals(5, b1.getAllMoves().size());
+    }
+    
 
-
+    @Test
+    public void testPawn1() throws Exception {
+        Piece pawn = board.getSquare(2, 2).getPiece();
+        assertTrue(pawn instanceof Pawn);
+        assertEquals(Colors.WHITE, pawn.getPlayer().getColor());
+        assertEquals(2, pawn.getAllMoves().size());
     }
 }

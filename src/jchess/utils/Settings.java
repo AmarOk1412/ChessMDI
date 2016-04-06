@@ -34,23 +34,33 @@ import jchess.core.Colors;
 public class Settings implements Serializable
 {
     private static final Logger LOG = Logger.getLogger(Settings.class);
-    
     private static ResourceBundle loc = null;
-    
     protected int timeForGame;
-    
     protected boolean runningChat;
-    
     protected boolean runningGameClock;
     
     /**
      * tel us if player choose time 4 game or it's infinity
      */
     protected boolean timeLimitSet = false;
-    
     protected boolean upsideDown;
-    
     protected boolean displayLegalMovesEnabled = true;
+    protected gameModes gameMode;
+    protected Player playerWhite;
+    protected Player playerBlack;
+    protected gameTypes gameType;
+    protected boolean renderLabels = true;
+
+    public enum gameTypes
+    {
+
+        local, network
+    }
+
+    public enum gameModes
+    {
+        newGame, loadGame
+    }
 
     /**
      * @return the runningChat
@@ -175,32 +185,6 @@ public class Settings implements Serializable
         this.displayLegalMovesEnabled = displayLegalMovesEnabled;
     }
 
-    public enum gameModes
-    {
-        newGame, loadGame
-    }
-    protected gameModes gameMode;
-    protected Player playerWhite;
-    protected Player playerBlack;
-
-    public enum gameTypes
-    {
-
-        local, network
-    }
-    protected gameTypes gameType;
-    protected boolean renderLabels = true;
-
-    public Settings()
-    {
-        //temporally
-        this.playerWhite = new Player("", Colors.WHITE.getColorName());
-        this.playerBlack = new Player("", Colors.BLACK.getColorName());
-        this.timeLimitSet = false;
-
-        gameMode = gameModes.newGame;
-    }
-
     /** Method to get game time set by player
      *  @return timeFofGame int with how long the game will leasts
      */
@@ -227,5 +211,16 @@ public class Settings implements Serializable
         }
         LOG.debug("Locale: " + Settings.loc.getLocale().toString());
         return result;
+    }
+
+    public Settings()
+    {
+        //temporally
+        this.playerWhite = new Player(Colors.WHITE.getColorName());
+        this.playerBlack = new Player(Colors.BLACK.getColorName());
+        this.timeLimitSet = false;
+
+        gameMode = gameModes.newGame;
+        gameType = gameTypes.local;
     }
 }

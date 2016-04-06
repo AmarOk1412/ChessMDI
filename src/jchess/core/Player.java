@@ -49,7 +49,7 @@ public class Player implements Serializable
     public Player(String color)
     {
     	SecureRandom random = new SecureRandom();
-        this.name = new BigInteger(130, random).toString(8) + "_" + color;
+        this.name = new BigInteger(8, random).toString() + "_" + color;
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
     }

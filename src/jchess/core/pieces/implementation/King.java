@@ -46,6 +46,7 @@ public class King extends Piece
     protected boolean wasMotioned = false;
     
     protected static final short value = 99;
+    
 
     public King(Chessboard chessboard, Player player)
     {
@@ -53,6 +54,7 @@ public class King extends Piece
         this.symbol = "K";
         this.addBehavior(new KingBehavior(this));
     }
+    
     /** Method to check is the king is checked
      *  @return bool true if king is not save, else returns false
      */
@@ -122,9 +124,9 @@ public class King extends Piece
                 Piece piece = sq.getPiece();
                 if(piece != null) 
                 {
-                    if(piece.getPlayer().getColor() != this.getPlayer().getColor() && piece != this)
+                    if(piece.getPlayer().getColor() != this.getPlayer().getColor())
                     {
-                        if(piece.getSquaresInRange().contains(this.getSquare()))
+                        if(piece.getSquaresInRange().contains(s))
                         {
                             return false;
                         }
@@ -140,16 +142,7 @@ public class King extends Piece
      */
     public boolean willBeSafeAfterMove(Square currentSquare, Square futureSquare)
     {
-        Piece tmp = futureSquare.piece;
-        futureSquare.piece  = currentSquare.piece; // move without redraw
-        currentSquare.piece = null;
-
-        boolean ret = isSafe(this.getSquare());
-
-        currentSquare.piece = futureSquare.piece;
-        futureSquare.piece  = tmp;
-
-        return ret;
+    	return isSafe(futureSquare);
     }
 
     /**

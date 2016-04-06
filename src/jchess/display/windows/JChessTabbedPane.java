@@ -82,7 +82,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
         JChessView jcv = JChessApp.getJavaChessView();
         if (JChessApp.getJavaChessView().getNewGameFrame() == null)
         {
-            jcv.setNewGameFrame(new NewGameWindow());
+            //jcv.setNewGameFrame(new NewGameWindow());
         }
         JChessApp.getApplication().show(JChessApp.getJavaChessView().getNewGameFrame());
     }

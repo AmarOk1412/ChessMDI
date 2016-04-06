@@ -26,11 +26,9 @@ import org.apache.log4j.PropertyConfigurator;
  * The main class of the application.
  */
 public class JChessApp extends SingleFrameApplication {
-    
-    protected static JChessView javaChessView; 
-     
-    public final static String LOG_FILE = "log4j.properties"; 
-    
+	   
+    private static JChessView javaChessView;     
+    public final static String LOG_FILE = "log4j.properties";    
     public final static String MAIN_PACKAGE_NAME = "jchess";
 
     /**
@@ -74,6 +72,7 @@ public class JChessApp extends SingleFrameApplication {
     public static void main(String[] args) 
     {
         launch(JChessApp.class, args);
+        /** /
         Properties logProp = new Properties();
         try
         {   
@@ -84,5 +83,6 @@ public class JChessApp extends SingleFrameApplication {
         {
             System.err.println("Logging not enabled : "+e.getMessage());
         } 
+        /**/
     }
 }

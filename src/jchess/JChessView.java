@@ -70,7 +70,8 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         Object target = event.getSource();
         if (target == newGameItem)
         {
-        	launchNewGame();
+            this.setNewGameFrame(new NewGameWindow());
+            JChessApp.getApplication().show(this.getNewGameFrame());
         }
         /*
         else if (target == saveGameItem) //saveGame
@@ -671,9 +672,20 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
     
     
     private void launchNewGame() {
-    	//TODO Generate Player, évite le menu
+    	/**/
         this.setNewGameFrame(new NewGameWindow());
         JChessApp.getApplication().show(this.getNewGameFrame());
+        /** /
+        Game newGame = new Game();
+        String title = newGame.getSettings().getPlayerWhite().getName()
+        + "vs" 
+        + newGame.getSettings().getPlayerBlack().getName();
+        this.gamesPane.addTab(title, newGame);
+        setActiveTabGame(0);
+        newGame.newGame();//start new Game
+        //JChessApp.getJavaChessView().getActiveTabGame().repaint();
+        //JChessApp.getJavaChessView().setActiveTabGame(JChessApp.getJavaChessView().getNumberOfOpenedTabs()-1);
+        /**/
     }
     
 }
