@@ -1,0 +1,110 @@
+@startuml
+package "jchess" {
+    class JChessApp
+    class JChessView
+    class NewGameWindow
+
+    package "core" {
+        class Chessboard
+        class Clock
+        enum Color
+        class Game
+        class GameClock
+        class Player
+        class Square
+
+        package "moves" {
+            enum Castling
+            class Move
+            class Moves
+        }
+
+        package "pieces" {
+            abstract class Piece
+            package "implementation" {
+                Piece <|-- class Bishop
+                Piece <|-- class King
+                Piece <|-- class Knight
+                Piece <|-- class Pawn
+                Piece <|-- class Queen
+                Piece <|-- class Rook
+
+            }
+
+            package "traits.behaviors" {
+                class Behavior
+
+                package "implementation" {
+                    Behavior <|-- abstract class LongRangePieceBehavior
+                    LongRangePieceBehavior <|-- class BishopBehavior
+                    Behavior <|-- class KingBehavior
+                    Behavior <|-- class KnightBehavior
+                    Behavior <|-- class PawnBehavior
+                    LongRangePieceBehavior <|-- class RookBehavior
+                }
+            }
+        }
+    }
+
+    package "display" {
+        package "panels" {
+            class LocalSettingsView
+        }
+        package "views" {
+            package "chessboard" {
+                interface ChessboardMouseView
+                abstract class ChessboardView
+                package "implementations" {
+                    ChessboardView <|-- class Chessboard2D
+                    class Pieces2D
+                }
+            }
+            package "windows" {
+                class DrawLocalSettings
+                class JChessAboutBox
+                class JChessTabbedPane
+                class PawnPromotionWindow
+                class ThemeChooseWindow
+            }
+        }
+    }
+
+
+    package "utils" {
+        class Settings
+        class MD5
+        class GUI
+    }
+
+
+    JChessApp *-- JChessView : jChessView
+    Chessboard  "1" *-- "many" Square
+    Game *-- Chessboard : chessboard
+    Game *-- Player : activePlayer
+    Game *-- GameClock : gameClock
+    Clock o-- Player
+    GameClock "1" *-- "3" Clock
+    GameClock o-- Game
+    Move "1" o-- "2" Square
+    Moves o-- Game : game
+    Piece o-- Square
+    Piece o-- Chessboard : chessboard
+    ChessboardView o-- chessboard : chessboard
+    Settings "1" *-- "2" Player
+    Gui *-- Game : game
+    Chessboard o-- Moves
+    Game *-- Moves
+    Moves "1" *-- "Many" Move
+    Chessboard "1" *-- "2" King
+    Move "1" o-- "3" Piece
+    Piece "1" o-- "Many" Behavior : behaviors
+    Behavior o-- Piece : piece
+    Game *-- LocalSettingsView
+    Chessboard *-- ChessboardView
+    Chessboard2D o-- Pieces2D : pieces2D
+    JChessView *-- PawnPromotionWindow : promotionBox
+    JChessView *-- GUI : gui
+    Chessboard  o-- Settings : settings
+    Game *-- Settings : settings
+    GameClock o-- Settings : settings
+    @enduml
