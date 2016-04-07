@@ -126,7 +126,7 @@ public class King extends Piece
                 {
                     if(piece.getPlayer().getColor() != this.getPlayer().getColor())
                     {
-                        if(piece.getSquaresInRange().contains(s))
+                        if(piece.getSquaresInRange().contains(sq))
                         {
                             return false;
                         }
