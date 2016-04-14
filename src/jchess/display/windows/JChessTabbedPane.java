@@ -26,7 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jchess.utils.GUI;
 import jchess.JChessApp;
-import jchess.NewGameWindow;
+import jchess.EditGameWindow;
 import jchess.core.Game;
 import org.apache.log4j.Logger;
 

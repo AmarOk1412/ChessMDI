@@ -168,6 +168,11 @@ public class Moves extends AbstractTableModel
     {
         if (isMoveCorrect(move))
         {
+        	System.out.println(game.getGameClock().isRunning());
+        	if(!game.getGameClock().isRunning())
+        	{
+        		game.getGameClock().start();
+        	}
             this.move.add(move);
             this.addMove2Table(move);
             this.moveForwardStack.clear();
@@ -190,6 +195,12 @@ public class Moves extends AbstractTableModel
             locMove += Character.toString((char) (begin.getPozX() + 97));//add letter of Square from which move was made
             locMove += Integer.toString(8 - begin.getPozY());//add number of Square from which move was made
         }
+        
+
+    	if(!game.getGameClock().isRunning())
+    	{
+    		game.getGameClock().start();
+    	}
         
         if (end.piece != null)
         {

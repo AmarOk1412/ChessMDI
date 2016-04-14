@@ -74,9 +74,9 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         {
         	initNewGame();
         }
-        if (target == editGameItem)
+        if (target == editGameItem && getActiveTabGame().getMoves().getMoves().isEmpty())
         {
-        	this.setNewGameFrame(new NewGameWindow());
+        	this.setNewGameFrame(new EditGameWindow());
         	JChessApp.getApplication().show(this.getNewGameFrame());
         }
         else if (target == saveGameItem) //saveGame

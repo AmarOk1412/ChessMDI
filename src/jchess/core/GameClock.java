@@ -44,6 +44,8 @@ public class GameClock extends JPanel implements Runnable
     private BufferedImage background;
     private Graphics bufferedGraphics;
 
+	private boolean _isRunning;
+
     GameClock(Game game)
     {
         super();
@@ -66,12 +68,14 @@ public class GameClock extends JPanel implements Runnable
         }
         this.drawBackground();
         this.setDoubleBuffered(true);
+        _isRunning = false;
     }
 
     /** Method to init game clock
      */
     public void start()
     {
+    	_isRunning = true;
         this.thread.start();
     }
 
@@ -79,6 +83,7 @@ public class GameClock extends JPanel implements Runnable
      */
     public void stop()
     {
+    	_isRunning = false;
         this.runningClock = null;
 
         try
@@ -268,4 +273,8 @@ public class GameClock extends JPanel implements Runnable
 
         //JOptionPane.showMessageDialog(this, "koniec czasu");
     }
+
+	public boolean isRunning() {
+		return _isRunning;
+	}
 }

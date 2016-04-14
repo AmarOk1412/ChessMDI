@@ -66,6 +66,108 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     {
         "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"
     };
+    
+    
+    
+    public DrawLocalSettings(JDialog parent)
+    {
+        super();
+        Settings actualSettings = JChessApp.getJavaChessView().getActiveTabGame().getSettings();
+        //this.setA//choose oponent
+        this.parent = parent;
+        this.color = new JComboBox(colors);
+        this.gbl = new GridBagLayout();
+        this.gbc = new GridBagConstraints();
+        this.sep = new JSeparator();
+        this.okButton = new JButton(Settings.lang("ok"));
+        this.compLevLab = new JLabel(Settings.lang("computer_level"));
+
+        //TODO : warning, player1 != white sometimes
+        this.firstName = new JTextField(actualSettings.getPlayerWhite().getName(), 10);
+        this.firstName.setSize(new Dimension(200, 50));
+        this.secondName = new JTextField(actualSettings.getPlayerBlack().getName(), 10);
+        this.secondName.setSize(new Dimension(200, 50));
+        this.firstNameLab = new JLabel(Settings.lang("first_player_name") + ": ");
+        this.secondNameLab = new JLabel(Settings.lang("second_player_name") + ": ");
+        this.oponentChoos = new ButtonGroup();
+        this.computerLevel = new JSlider();
+        this.upsideDown = new JCheckBox(Settings.lang("upside_down"));
+        if(actualSettings.isUpsideDown()) this.upsideDown.setSelected(true);
+        this.timeGame = new JCheckBox(Settings.lang("time_game_min"));
+        if(actualSettings.isTimeLimitSet()) this.timeGame.setSelected(true);
+        this.time4Game = new JComboBox(times);
+        this.time4Game.setSelectedIndex(1); //TODO !!!!
+
+        this.oponentComp = new JRadioButton(Settings.lang("against_computer"), false);
+        this.oponentHuman = new JRadioButton(Settings.lang("against_other_human"), true);
+
+        this.setLayout(gbl);
+        this.oponentComp.addActionListener(this);
+        this.oponentHuman.addActionListener(this);
+        this.okButton.addActionListener(this);
+
+        this.secondName.addActionListener(this);
+
+        this.oponentChoos.add(oponentComp);
+        this.oponentChoos.add(oponentHuman);
+        this.computerLevel.setEnabled(false);
+        this.computerLevel.setMaximum(3);
+        this.computerLevel.setMinimum(1);
+
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 0;
+        this.gbc.insets = new Insets(3, 3, 3, 3);
+        this.gbl.setConstraints(oponentComp, gbc);
+        this.add(oponentComp);
+        this.gbc.gridx = 1;
+        this.gbl.setConstraints(oponentHuman, gbc);
+        this.add(oponentHuman);
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 1;
+        this.gbl.setConstraints(firstNameLab, gbc);
+        this.add(firstNameLab);
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 2;
+        this.gbl.setConstraints(firstName, gbc);
+        this.add(firstName);
+        this.gbc.gridx = 1;
+        this.gbc.gridy = 2;
+        this.gbl.setConstraints(color, gbc);
+        this.add(color);
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 3;
+        this.gbl.setConstraints(secondNameLab, gbc);
+        this.add(secondNameLab);
+        this.gbc.gridy = 4;
+        this.gbl.setConstraints(secondName, gbc);
+        this.add(secondName);
+        this.gbc.gridy = 5;
+        this.gbc.insets = new Insets(0, 0, 0, 0);
+        this.gbl.setConstraints(compLevLab, gbc);
+        this.add(compLevLab);
+        this.gbc.gridy = 6;
+        this.gbl.setConstraints(computerLevel, gbc);
+        this.add(computerLevel);
+        this.gbc.gridy = 7;
+        this.gbl.setConstraints(upsideDown, gbc);
+        this.add(upsideDown);
+        this.gbc.gridy = 8;
+        this.gbc.gridwidth = 1;
+        this.gbl.setConstraints(timeGame, gbc);
+        this.add(timeGame);
+        this.gbc.gridx = 1;
+        this.gbc.gridy = 8;
+        this.gbc.gridwidth = 1;
+        this.gbl.setConstraints(time4Game, gbc);
+        this.add(time4Game);
+        this.gbc.gridx = 1;
+        this.gbc.gridy = 9;
+        this.gbc.gridwidth = 0;
+        this.gbl.setConstraints(okButton, gbc);
+        this.add(okButton);
+        this.oponentComp.setEnabled(false);//for now, becouse not implemented!
+
+    }
         
     /** 
      * Method witch is checking correction of edit tables
@@ -141,8 +243,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 JOptionPane.showMessageDialog(this, Settings.lang("fill_name"));
                 return;
             }
-            Game newGUI = JChessApp.getJavaChessView().addNewTab(this.firstName.getText() + " vs " + this.secondName.getText());
-            //newGUI.getChat().setEnabled(false);
+            Game newGUI = JChessApp.getJavaChessView().getActiveTabGame();
             
             Settings sett = newGUI.getSettings();//sett local settings variable
             Player pl1 = sett.getPlayerWhite();//set local player variable
@@ -174,7 +275,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 Integer val = new Integer(value);
                 sett.setTimeForGame((int) val * 60);//set time for game and mult it to seconds
                 newGUI.getGameClock().setTimes(sett.getTimeForGame(), sett.getTimeForGame());
-                newGUI.getGameClock().start();
             }
             LOG.debug("this.time4Game.getActionCommand(): " + this.time4Game.getActionCommand());
             //this.time4Game.getComponent(this.time4Game.getSelectedIndex());
@@ -187,101 +287,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             JChessApp.getJavaChessView().getActiveTabGame().repaint();
             JChessApp.getJavaChessView().setActiveTabGame(JChessApp.getJavaChessView().getNumberOfOpenedTabs()-1);
         }
-    }
-
-    public DrawLocalSettings(JDialog parent)
-    {
-        super();
-        //this.setA//choose oponent
-        this.parent = parent;
-        this.color = new JComboBox(colors);
-        this.gbl = new GridBagLayout();
-        this.gbc = new GridBagConstraints();
-        this.sep = new JSeparator();
-        this.okButton = new JButton(Settings.lang("ok"));
-        this.compLevLab = new JLabel(Settings.lang("computer_level"));
-
-        this.firstName = new JTextField("", 10);
-        this.firstName.setSize(new Dimension(200, 50));
-        this.secondName = new JTextField("", 10);
-        this.secondName.setSize(new Dimension(200, 50));
-        this.firstNameLab = new JLabel(Settings.lang("first_player_name") + ": ");
-        this.secondNameLab = new JLabel(Settings.lang("second_player_name") + ": ");
-        this.oponentChoos = new ButtonGroup();
-        this.computerLevel = new JSlider();
-        this.upsideDown = new JCheckBox(Settings.lang("upside_down"));
-        this.timeGame = new JCheckBox(Settings.lang("time_game_min"));
-        this.time4Game = new JComboBox(times);
-
-        this.oponentComp = new JRadioButton(Settings.lang("against_computer"), false);
-        this.oponentHuman = new JRadioButton(Settings.lang("against_other_human"), true);
-
-        this.setLayout(gbl);
-        this.oponentComp.addActionListener(this);
-        this.oponentHuman.addActionListener(this);
-        this.okButton.addActionListener(this);
-
-        this.secondName.addActionListener(this);
-
-        this.oponentChoos.add(oponentComp);
-        this.oponentChoos.add(oponentHuman);
-        this.computerLevel.setEnabled(false);
-        this.computerLevel.setMaximum(3);
-        this.computerLevel.setMinimum(1);
-
-        this.gbc.gridx = 0;
-        this.gbc.gridy = 0;
-        this.gbc.insets = new Insets(3, 3, 3, 3);
-        this.gbl.setConstraints(oponentComp, gbc);
-        this.add(oponentComp);
-        this.gbc.gridx = 1;
-        this.gbl.setConstraints(oponentHuman, gbc);
-        this.add(oponentHuman);
-        this.gbc.gridx = 0;
-        this.gbc.gridy = 1;
-        this.gbl.setConstraints(firstNameLab, gbc);
-        this.add(firstNameLab);
-        this.gbc.gridx = 0;
-        this.gbc.gridy = 2;
-        this.gbl.setConstraints(firstName, gbc);
-        this.add(firstName);
-        this.gbc.gridx = 1;
-        this.gbc.gridy = 2;
-        this.gbl.setConstraints(color, gbc);
-        this.add(color);
-        this.gbc.gridx = 0;
-        this.gbc.gridy = 3;
-        this.gbl.setConstraints(secondNameLab, gbc);
-        this.add(secondNameLab);
-        this.gbc.gridy = 4;
-        this.gbl.setConstraints(secondName, gbc);
-        this.add(secondName);
-        this.gbc.gridy = 5;
-        this.gbc.insets = new Insets(0, 0, 0, 0);
-        this.gbl.setConstraints(compLevLab, gbc);
-        this.add(compLevLab);
-        this.gbc.gridy = 6;
-        this.gbl.setConstraints(computerLevel, gbc);
-        this.add(computerLevel);
-        this.gbc.gridy = 7;
-        this.gbl.setConstraints(upsideDown, gbc);
-        this.add(upsideDown);
-        this.gbc.gridy = 8;
-        this.gbc.gridwidth = 1;
-        this.gbl.setConstraints(timeGame, gbc);
-        this.add(timeGame);
-        this.gbc.gridx = 1;
-        this.gbc.gridy = 8;
-        this.gbc.gridwidth = 1;
-        this.gbl.setConstraints(time4Game, gbc);
-        this.add(time4Game);
-        this.gbc.gridx = 1;
-        this.gbc.gridy = 9;
-        this.gbc.gridwidth = 0;
-        this.gbl.setConstraints(okButton, gbc);
-        this.add(okButton);
-        this.oponentComp.setEnabled(false);//for now, becouse not implemented!
-
     }
 
     /**
