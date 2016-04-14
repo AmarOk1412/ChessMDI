@@ -47,6 +47,21 @@ import org.apache.log4j.Logger;
  */
 public class JChessView extends FrameView implements ActionListener, ComponentListener
 {
+	private static volatile JChessView _instance = null;
+	
+	public static JChessView getInstance(SingleFrameApplication app) 
+	{
+		if(_instance == null)
+		{
+			synchronized (JChessView.class) {
+				_instance = new JChessView(app);
+			}
+		}
+		return _instance;
+	}
+	
+	
+	
     private static final Logger LOG = Logger.getLogger(JChessView.class);
     
     protected static GUI gui = null;
@@ -160,7 +175,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
     ///--endOf- don't delete, becouse they're interfaces for MouseEvent
         
 
-    public JChessView(SingleFrameApplication app) 
+    private JChessView(SingleFrameApplication app) 
     {
         super(app);
         initComponents();

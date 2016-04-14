@@ -34,7 +34,7 @@ package "jchess" {
             package "traits.behaviors" {
                 class Behavior
 
-                package "implementation" {
+                package "traits.behaviors.implementation" {
                     Behavior <|-- abstract class LongRangePieceBehavior
                     LongRangePieceBehavior <|-- class BishopBehavior
                     Behavior <|-- class KingBehavior

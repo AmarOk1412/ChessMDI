@@ -47,7 +47,7 @@ public class JChessApp extends SingleFrameApplication {
     @Override 
     protected void startup() 
     {
-        javaChessView = new JChessView(this);
+        javaChessView = JChessView.getInstance(this);
         javaChessView.initNewGame();
         show(getJavaChessView());
     }
