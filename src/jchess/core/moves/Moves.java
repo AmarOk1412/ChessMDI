@@ -168,11 +168,6 @@ public class Moves extends AbstractTableModel
     {
         if (isMoveCorrect(move))
         {
-        	System.out.println(game.getGameClock().isRunning());
-        	if(!game.getGameClock().isRunning())
-        	{
-        		game.getGameClock().start();
-        	}
             this.move.add(move);
             this.addMove2Table(move);
             this.moveForwardStack.clear();
@@ -197,7 +192,7 @@ public class Moves extends AbstractTableModel
         }
         
 
-    	if(!game.getGameClock().isRunning())
+    	if( game.getSettings().isTimeLimitSet() && !game.getGameClock().isRunning())
     	{
     		game.getGameClock().start();
     	}

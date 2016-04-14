@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.TreeSet;
 import jchess.core.Colors;
 import jchess.core.pieces.Piece;
+import jchess.core.pieces.implementation.Arrow;
 import jchess.core.pieces.implementation.Bishop;
 import jchess.core.pieces.implementation.King;
 import jchess.core.pieces.implementation.Knight;
@@ -119,6 +120,7 @@ public class Pieces2D
         result.put(Rook.class.getName(), GUI.loadPieceImage(Rook.class.getSimpleName(), color, size, FILE_EXT));
         result.put(King.class.getName(), GUI.loadPieceImage(King.class.getSimpleName(), color, size, FILE_EXT));
         result.put(Bishop.class.getName(), GUI.loadPieceImage(Bishop.class.getSimpleName(), color, size, FILE_EXT));    
+        result.put(Arrow.class.getName(), GUI.loadPieceImage(Arrow.class.getSimpleName(), color, size, FILE_EXT));
         
         return result;
     }

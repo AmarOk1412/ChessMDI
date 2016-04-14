@@ -23,6 +23,7 @@ import jchess.core.pieces.implementation.Knight;
 import jchess.core.pieces.implementation.Queen;
 import jchess.core.pieces.implementation.Rook;
 import jchess.core.pieces.implementation.Pawn;
+import jchess.core.pieces.implementation.Arrow;
 import jchess.core.pieces.implementation.Bishop;
 import jchess.core.pieces.Piece;
 import java.awt.event.ComponentEvent;
@@ -176,7 +177,7 @@ public class Chessboard
         }
 
         this.getSquare(0, i).setPiece(new Rook(this, player));
-        this.getSquare(7, i).setPiece(new Rook(this, player));
+        this.getSquare(7, i).setPiece(new Arrow(this, player));
         this.getSquare(1, i).setPiece(new Knight(this, player));
         this.getSquare(6, i).setPiece(new Knight(this, player));
         this.getSquare(2, i).setPiece(new Bishop(this, player));
@@ -353,6 +354,9 @@ public class Chessboard
                     {
                         case "Queen":
                             piece = new Queen(this, end.getPiece().getPlayer());
+                            break;
+                        case "Arrow":
+                            piece = new Arrow(this, end.getPiece().getPlayer());
                             break;
                         case "Rook":
                             piece = new Rook(this, end.getPiece().getPlayer());
