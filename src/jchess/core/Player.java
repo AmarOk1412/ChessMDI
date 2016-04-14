@@ -52,6 +52,7 @@ public class Player implements Serializable
         this.name = new BigInteger(8, random).toString() + "_" + color;
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
+        this.playerType = this.playerType.localUser;
     }
 
     /**
@@ -64,6 +65,7 @@ public class Player implements Serializable
         this.name = name;
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
+        this.playerType = this.playerType.localUser;
     }
 
     /** Method setting the players name

@@ -61,6 +61,20 @@ public class Settings implements Serializable
     {
         newGame, loadGame
     }
+    
+
+
+    public Settings()
+    {
+        //temporally
+        this.playerWhite = new Player(Colors.WHITE.getColorName());
+        this.playerBlack = new Player(Colors.BLACK.getColorName());
+        this.timeLimitSet = false;
+        this.upsideDown = false;
+
+        gameMode = gameModes.newGame;
+        gameType = gameTypes.local;
+    }
 
     /**
      * @return the runningChat
@@ -211,16 +225,5 @@ public class Settings implements Serializable
         }
         LOG.debug("Locale: " + Settings.loc.getLocale().toString());
         return result;
-    }
-
-    public Settings()
-    {
-        //temporally
-        this.playerWhite = new Player(Colors.WHITE.getColorName());
-        this.playerBlack = new Player(Colors.BLACK.getColorName());
-        this.timeLimitSet = false;
-
-        gameMode = gameModes.newGame;
-        gameType = gameTypes.local;
     }
 }

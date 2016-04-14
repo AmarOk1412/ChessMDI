@@ -18,7 +18,9 @@ package jchess;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 import java.awt.Window;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -46,6 +48,7 @@ public class JChessApp extends SingleFrameApplication {
     protected void startup() 
     {
         javaChessView = new JChessView(this);
+        javaChessView.initNewGame();
         show(getJavaChessView());
     }
 
@@ -72,17 +75,16 @@ public class JChessApp extends SingleFrameApplication {
     public static void main(String[] args) 
     {
         launch(JChessApp.class, args);
-        /** /
         Properties logProp = new Properties();
         try
         {   
-            logProp.load(JChessApp.class.getClassLoader().getResourceAsStream(LOG_FILE)); 
+        	InputStream resourceAsStream =  new FileInputStream(JChessApp.LOG_FILE);
+            logProp.load(resourceAsStream); 
             PropertyConfigurator.configure(logProp);
         }
         catch (NullPointerException | IOException e)
         {
             System.err.println("Logging not enabled : "+e.getMessage());
         } 
-        /**/
     }
 }
