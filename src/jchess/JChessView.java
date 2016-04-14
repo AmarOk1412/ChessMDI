@@ -32,7 +32,6 @@ import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.File;
-import java.applet.*;
 import java.io.IOException;
 import jchess.utils.GUI;
 import jchess.utils.Settings;
@@ -62,6 +61,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 
     public Game addNewTab(String title)
     {
+    	System.out.println("TODO");
         Game newGUI = new Game();
         this.gamesPane.addTab(title, newGUI);
         return newGUI;
