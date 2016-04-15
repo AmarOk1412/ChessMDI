@@ -108,11 +108,21 @@ public class TestPiece {
     @Test
     public void testBishop1() throws Exception {
 
-        // e2 (4, 6) e4 (5, 4)
-        board.move(4, 6, 4, 4);
+        // e2 (4, 6) f4 (5, 4)
+        /*board.xFrom(4);
+        board.yFrom(6);
+        board.xTo(5);
+        board.yTo(4);*/
+    	board.from("e2");
+    	board.to("f4");
+        board.move();
 
         // e7 (4, 1) e5 (4, 3)
-        board.move(4, 1, 4, 3);
+        //board.move(4, 1, 4, 3);
+
+    	board.from("e7");
+    	board.to("e5");
+        board.move();
 
 
         assertNull(board.getSquare(4, 1).getPiece()); // now the pawn is not present in e7

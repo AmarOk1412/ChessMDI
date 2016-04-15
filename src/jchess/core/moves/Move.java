@@ -35,7 +35,7 @@ public class Move
     protected Castling castlingMove = Castling.NONE;
     protected boolean wasPawnTwoFieldsMove = false;
 
-    Move(Square from, Square to, Piece movedPiece, Piece takenPiece, Castling castlingMove, boolean wasEnPassant, Piece promotedPiece)
+    public Move(Square from, Square to, Piece movedPiece, Piece takenPiece, Castling castlingMove, boolean wasEnPassant, Piece promotedPiece)
     {
         this.from = from;
         this.to = to;

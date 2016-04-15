@@ -40,6 +40,13 @@ public class Square
      * object Piece on square (and extending Piecie)
      */
     public Piece piece = null;
+    
+    public Square()
+    {
+    	this.pozX = -1;
+    	this.pozY = -1;
+    	this.piece = null;
+    }
 
     public Square(int pozX, int pozY, Piece piece)
     {
