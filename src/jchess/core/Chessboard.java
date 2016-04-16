@@ -76,14 +76,7 @@ public class Chessboard
     
     protected int activeSquareX;
     
-    protected int activeSquareY;    
-    
-    private int _xFrom = -1;
-    private int _yFrom = -1;
-    private int _xTo = -1;
-    private int _yTo = -1;
-    private String _horizontal = "abcdefgh";
-    private String _vertical = "87654321";
+    protected int activeSquareY;
     
     /**
      * chessboard view data object
@@ -253,117 +246,6 @@ public class Chessboard
         move(begin, end, true);
     }
 
-    public void xFrom(Character value)
-    {
-    	int index = _horizontal.indexOf(value);
-    	if(isValidPos(index, true))
-    		_xFrom = index;
-    }
-    
-    public void xFrom(int value)
-    {
-    	if(isValidPos(value, true))
-    		_xFrom = value;
-    }
-
-
-    public void yFrom(Character value)
-    {
-    	int index = _horizontal.indexOf(value);
-    	if(isValidPos(index, false))
-    		_yFrom = index;
-    }
-    
-    public void yFrom(int value)
-    {
-    	if(isValidPos(value, false))
-    		_yFrom = value;
-    }
-    
-
-    public void xTo(Character value)
-    {
-    	int index = _horizontal.indexOf(value);
-    	if(isValidPos(index, true))
-    		_xTo = index;
-    }
-    
-    public void xTo(int value)
-    {
-    	if(isValidPos(value, true))
-    		_xTo = value;
-    }
-
-
-    public void yTo(Character value)
-    {
-    	int index = _horizontal.indexOf(value);
-    	if(isValidPos(index, false))
-    		_yTo = index;
-    }
-    
-    public void yTo(int value)
-    {
-    	if(isValidPos(value, false))
-    		_yTo = value;
-    }
-    
-
-
-    public void from(String value)
-    {
-    	if(value.length() != 2)
-    	{
-    		LOG.error("from value incorrecte : " + value );
-    		return;
-    	}
-    	int index = _horizontal.indexOf(value.getBytes()[0]);
-    	System.out.println("fr:"+index);
-    	if(isValidPos(index, true))
-    		_xFrom = index;
-    	index = _vertical.indexOf(value.getBytes()[1]);
-    	System.out.println("fr:"+index);
-    	if(isValidPos(index, false))
-    		_yFrom = index;
-    }
-
-    public void to(String value)
-    {
-    	if(value.length() != 2)
-    	{
-    		LOG.error("from value incorrecte : " + value );
-    		return;
-    	}
-    	int index = _horizontal.indexOf(value.getBytes()[0]);
-    	if(isValidPos(index, true))
-    		_xTo = index;
-    	index = _vertical.indexOf(value.getBytes()[1]);
-    	if(isValidPos(index, false))
-    		_yTo = index;
-    }
-    
-    public void move()
-    {
-    	if(isValidPos(_xFrom, true) && isValidPos(_xTo, true) &&
-    	isValidPos(_yFrom, false) && isValidPos(_xTo, false))
-    	{
-    		move(_xFrom, _yFrom, _xTo, _yTo);
-    		_xFrom = -1;
-    		_yFrom = -1;
-    		_xTo = -1;
-    		_yTo = -1;
-    	}
-    	else
-    	{
-    		LOG.error("incorrect move");
-    	}
-    }
-    
-    public boolean isValidPos(int value, boolean horizontal)
-    {
-    	//TODO
-    	return value >= 0 && value < 8;
-    }
     
     
 

@@ -1,26 +1,23 @@
 package jchess.test;
 
-import jchess.JChessApp;
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import jchess.core.Chessboard;
 import jchess.core.Colors;
 import jchess.core.Game;
 import jchess.core.Square;
-import jchess.core.moves.Moves;
+import jchess.core.moves.MoveFactory;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.implementation.Bishop;
 import jchess.core.pieces.implementation.King;
 import jchess.core.pieces.implementation.Pawn;
 import jchess.utils.Settings;
-import org.jdesktop.application.SingleFrameApplication;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.awt.*;
-
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by macher1 on 12/04/2015.
@@ -89,7 +86,7 @@ public class TestPiece {
 
         assertNull(board.getSquare(4, 4).getPiece()); // nothing there
         // e2 (4, 6) e4 (4, 4)
-        board.move(4, 6, 4, 4);
+        new MoveFactory(board).from("e2").to("e4").move();
 
         // #4 bad API design
         //assertEquals(1, board.getMoves().size());
@@ -108,21 +105,11 @@ public class TestPiece {
     @Test
     public void testBishop1() throws Exception {
 
-        // e2 (4, 6) f4 (5, 4)
-        /*board.xFrom(4);
-        board.yFrom(6);
-        board.xTo(5);
-        board.yTo(4);*/
-    	board.from("e2");
-    	board.to("f4");
-        board.move();
+        // e2 (4, 6) e4 (5, 4)
+        new MoveFactory(board).from("e2").to("e4").move();
 
         // e7 (4, 1) e5 (4, 3)
-        //board.move(4, 1, 4, 3);
-
-    	board.from("e7");
-    	board.to("e5");
-        board.move();
+        new MoveFactory(board).from("e7").to("e5").move();
 
 
         assertNull(board.getSquare(4, 1).getPiece()); // now the pawn is not present in e7
@@ -144,10 +131,10 @@ public class TestPiece {
     public void testBishop2() throws Exception {
 
         // d2 (3, 6) d4 (3, 4)
-        board.move(3, 6, 3, 4);
+        new MoveFactory(board).from("d2").to("d4").move();
 
         // e7 (4, 1) e5 (4, 3)
-        board.move(4, 1, 4, 3);
+        new MoveFactory(board).from("e7").to("e5").move();
 
         // bishop in c1
         Piece b1 = board.getSquare(2, 7).getPiece();
@@ -160,9 +147,9 @@ public class TestPiece {
 
     @Test
     public void testPawn1() throws Exception {
-        Piece pawn = board.getSquare(2, 2).getPiece();
+        Piece pawn = board.getSquare(1, 1).getPiece();
         assertTrue(pawn instanceof Pawn);
-        assertEquals(Colors.WHITE, pawn.getPlayer().getColor());
+        assertEquals(Colors.BLACK, pawn.getPlayer().getColor());
         assertEquals(2, pawn.getAllMoves().size());
     }
 }
