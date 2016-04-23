@@ -50,6 +50,7 @@ public class Settings implements Serializable
     protected Player playerBlack;
     protected gameTypes gameType;
     protected boolean renderLabels = true;
+    private int size;
 
     public enum gameTypes
     {
@@ -74,6 +75,8 @@ public class Settings implements Serializable
 
         gameMode = gameModes.newGame;
         gameType = gameTypes.local;
+        
+        this.size = 8;
     }
 
     /**
@@ -226,4 +229,13 @@ public class Settings implements Serializable
         LOG.debug("Locale: " + Settings.loc.getLocale().toString());
         return result;
     }
+
+	public int getSize() {
+		return size;
+	}
+	
+	public void setSize(int newValue)
+	{
+		size = newValue;
+	}
 }

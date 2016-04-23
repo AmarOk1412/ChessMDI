@@ -53,7 +53,6 @@ public class KingBehavior extends Behavior
     {
         Set<Square> list = new HashSet<>();
         Square sq;
-        Square sq1;
         King king = (King)piece;
         
         for (int i = king.getSquare().getPozX() - 1; i <= king.getSquare().getPozX() + 1; i++)
@@ -94,8 +93,6 @@ public class KingBehavior extends Behavior
                         }
                     }
                     sq = king.getChessboard().getSquare(king.getSquare().getPozX() - 2, king.getSquare().getPozY());
-                    sq1 = king.getChessboard().getSquare(king.getSquare().getPozX() - 1, king.getSquare().getPozY());
-                    
                     if (canCastling) //can do castling when none of Sq,sq1 is checked
                     { 
                         list.add(sq);
@@ -106,6 +103,7 @@ public class KingBehavior extends Behavior
                     && king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece().getName().equals("Rook"))
             {
                 boolean canCastling = true;
+                //TODO if width!=7 ?
                 Rook rook = (Rook) king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece();
                 if (!rook.getWasMotioned()) //if king was not moves before and is not checked
                 {
@@ -118,7 +116,6 @@ public class KingBehavior extends Behavior
                         }
                     }
                     sq = king.getChessboard().getSquares()[king.getSquare().getPozX() + 2][king.getSquare().getPozY()];
-                    sq1 = king.getChessboard().getSquares()[king.getSquare().getPozX() + 1][king.getSquare().getPozY()];
                     if (canCastling) //can do castling when none of Sq,sq1 is checked
                     {
                         list.add(sq);

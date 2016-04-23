@@ -26,15 +26,13 @@ public class Square
 {
     /**
      * X position of square 
-     * 0-7, because 8 squares for row/column
      */
     protected int pozX; 
 
     /**
      * Y position of square
-     * 0-7, because 8 squares for row/column
      */
-    protected int pozY; // 0-7, becouse 8 squares for row/column
+    protected int pozY; 
     
     /**
      * object Piece on square (and extending Piecie)

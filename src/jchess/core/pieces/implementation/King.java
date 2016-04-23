@@ -73,9 +73,9 @@ public class King extends Piece
          */
         if (this.getAllMoves().isEmpty())
         {
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < getChessboard().getSize(); ++i)
             {
-                for (int j = 0; j < 8; ++j)
+                for (int j = 0; j < getChessboard().getSize(); ++j)
                 {
                     Piece piece = getChessboard().getSquare(i, j).getPiece();
                     if (null != piece && piece.getPlayer() == this.getPlayer() && !piece.getAllMoves().isEmpty())
@@ -126,7 +126,7 @@ public class King extends Piece
                 {
                     if(piece.getPlayer().getColor() != this.getPlayer().getColor())
                     {
-                        if(piece.getSquaresInRange().contains(sq))
+                        if(piece.getSquaresInRange().contains(s))
                         {
                             return false;
                         }
@@ -136,13 +136,29 @@ public class King extends Piece
         }
         return true;
     }
+    
+    public boolean ourKingWillBeSafeAfterMove(Square currentSquare, Square futureSquare)
+    {
+    	//Simulate one move
+    	Piece pieceToMove = currentSquare.getPiece();
+    	Piece actualPiece = futureSquare.getPiece();
+    	futureSquare.piece = pieceToMove;
+    	currentSquare.piece = null; 
+    	//Check if the king is safe
+    	boolean ret = isSafe(this.getSquare());
+    	//Reset configuration
+    	futureSquare.piece = actualPiece;
+    	currentSquare.piece = pieceToMove;    	
+    	return ret;
+    }
 
     /** Method to check will the king be safe when move
      *  @return bool true if king is save, else returns false
      */
     public boolean willBeSafeAfterMove(Square currentSquare, Square futureSquare)
     {
-    	return isSafe(futureSquare);
+    	Piece piece = currentSquare.getPiece();
+    	return piece instanceof King ? isSafe(futureSquare) : ourKingWillBeSafeAfterMove(currentSquare, futureSquare);
     }
 
     /**

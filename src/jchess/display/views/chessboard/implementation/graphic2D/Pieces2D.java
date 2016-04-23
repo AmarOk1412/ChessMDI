@@ -84,7 +84,7 @@ public class Pieces2D
         currentImageSet = imageSets.get(currentSize);
     }
     
-    public  final void resize(int squareSize)
+    public final void resize(int squareSize)
     {
         if (null != Pieces2D.setsSizes)
         {
@@ -185,5 +185,5 @@ public class Pieces2D
         {
             LOG.error("Something wrong when painting piece: " + exc.getMessage());
         }
-    }      
+    }   
 }

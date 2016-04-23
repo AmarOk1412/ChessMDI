@@ -53,6 +53,9 @@ public class Chessboard
     
     protected static final int BOTTOM = 7;
     
+    
+    protected int _size = 8;
+    
     /*
      * squares of chessboard
      */
@@ -96,11 +99,17 @@ public class Chessboard
         this.activeSquareX = 0;
         this.activeSquareY = 0;
         
-        this.squares = new Square[8][8];//initalization of 8x8 chessboard
-
-        for (int i = 0; i < 8; i++) //create object for each square
+        this._size = settings.getSize();
+        if(this._size < 8)
         {
-            for (int y = 0; y < 8; y++)
+        	this.LOG.log(Level.ERROR, "_size < 8. Can't initialize. Exit");
+        }
+        
+        this.squares = new Square[_size][_size];
+
+        for (int i = 0; i < _size; i++) //create object for each square
+        {
+            for (int y = 0; y < _size; y++)
             {
                 this.squares[i][y] = new Square(i, y, null);
             }
@@ -124,6 +133,10 @@ public class Chessboard
     {
         return BOTTOM;
     }
+    
+    public int getSize() {
+    	return _size;
+    }
     /** Method setPieces on begin of new game or loaded game
      * @param places string with pieces to set on chessboard
      * @param plWhite reference to white player
@@ -146,6 +159,7 @@ public class Chessboard
     /**
      *
      */
+    //TODO random :D
     private void setPieces4NewGame(Player plWhite, Player plBlack)
     {
         /* WHITE PIECES */
@@ -208,7 +222,7 @@ public class Chessboard
             LOG.error("error setting pawns etc.");
             return;
         }
-        for (int x = 0; x < 8; x++)
+        for (int x = 0; x < _size; x++)
         {
             this.getSquare(x, i).setPiece(new Pawn(this, player));
         }
@@ -243,7 +257,7 @@ public class Chessboard
  
     public void move(Square begin, Square end)
     {
-        move(begin, end, true);
+        move(begin, end, true, true);
     }
 
     
@@ -269,12 +283,7 @@ public class Chessboard
             LOG.error("error moving piece: " + exc.getMessage());
             return;
         }
-        this.move(fromSQ, toSQ, true);
-    }
-
-    public void move(Square begin, Square end, boolean refresh)
-    {
-        this.move(begin, end, refresh, true);
+        this.move(fromSQ, toSQ, true, true);
     }
 
     /** Method move piece from square to square
@@ -560,6 +569,27 @@ public class Chessboard
     public Square[][] getSquares() 
     {
         return squares;
+    }
+    
+    public Square getSquare(String pos) 
+    {
+        String _horizontal = "abcdefgh";
+        String _vertical = "87654321";
+        try 
+        {
+        	if(pos.length() != 2)
+	    	{
+	    		LOG.error("from value incorrecte : " + pos );
+	    		return null;
+	    	}
+	    	int x = _horizontal.indexOf(pos.getBytes()[0]);
+	    	int y = _vertical.indexOf(pos.getBytes()[1]);
+	    	return this.getSquare(x, y);
+        } 
+        catch(ArrayIndexOutOfBoundsException exc) 
+        {
+            return null;
+        }
     }
     
     public Square getSquare(int x, int y) 

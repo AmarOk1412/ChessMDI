@@ -4,7 +4,6 @@
  */
 package jchess.display.views.chessboard;
 
-import jchess.display.views.chessboard.implementation.graphic2D.Chessboard2D;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -77,12 +76,12 @@ public abstract class ChessboardView extends JPanel
     /*
      * image width
      */
-    public static final int imgWidht = 480;
+    public static final int imgWidth = 480;
     
     /*
      * image height
      */
-    public static final int imgHeight = imgWidht;
+    public static final int imgHeight = imgWidth;
     
     private Chessboard chessboard;
     
@@ -90,17 +89,17 @@ public abstract class ChessboardView extends JPanel
     
     abstract public void unselect();
     
-    abstract public int getChessboardWidht();
+    abstract public int getChessboardWidth();
     
     abstract public int getChessboardHeight();
 
-    abstract public int getChessboardWidht(boolean includeLables);
+    abstract public int getChessboardWidth(boolean includeLables);
 
     abstract public int getChessboardHeight(boolean includeLabels);  
     
     abstract public int getSquareHeight();
     
-    abstract public void resizeChessboard(int height);
+    abstract public void resizeChessboard(int width, int height);
     
     abstract public Point getTopLeftPoint();
     

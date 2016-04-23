@@ -19,10 +19,8 @@ import java.util.HashSet;
 import java.util.Set;
 import jchess.core.Chessboard;
 import jchess.core.Colors;
-import jchess.core.Player;
 import jchess.core.Square;
 import jchess.core.pieces.Piece;
-import jchess.core.pieces.implementation.King;
 import jchess.core.pieces.traits.behaviors.Behavior;
 
 /**
@@ -59,9 +57,6 @@ public class PawnBehavior extends Behavior
         sq = chessboard.getSquare(piece.getSquare().getPozX(), first);
         if (sq.getPiece() == null) //if next is free
         {
-            King kingWhite = chessboard.getKingWhite();
-            King kingBlack = chessboard.getKingBlack();
-
             list.add(chessboard.getSquares()[piece.getSquare().getPozX()][first]);
 
             if ((piece.getPlayer().isGoDown() && piece.getSquare().getPozY() == 1) || (!piece.getPlayer().isGoDown() && piece.getSquare().getPozY() == 6))

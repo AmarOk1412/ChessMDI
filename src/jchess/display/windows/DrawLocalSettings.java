@@ -57,6 +57,9 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     JButton okButton;
     JCheckBox timeGame;
     JComboBox time4Game;
+
+    JLabel chessboardSizeLab;
+    JComboBox sizeChessboard;
     String colors[] =
     {
         Settings.lang("white"), Settings.lang("black")
@@ -65,6 +68,10 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     String times[] =
     {
         "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"
+    };
+    String sizes[] =
+    {
+        "8", "10", "12", "15", "20"
     };
     
     
@@ -97,6 +104,9 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         if(actualSettings.isTimeLimitSet()) this.timeGame.setSelected(true);
         this.time4Game = new JComboBox(times);
         this.time4Game.setSelectedIndex(1); //TODO !!!!
+
+        this.chessboardSizeLab = new JLabel(Settings.lang("chessboard_size") + ": ");
+        this.sizeChessboard = new JComboBox(sizes);
 
         this.oponentComp = new JRadioButton(Settings.lang("against_computer"), false);
         this.oponentHuman = new JRadioButton(Settings.lang("against_other_human"), true);
@@ -160,8 +170,18 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         this.gbc.gridwidth = 1;
         this.gbl.setConstraints(time4Game, gbc);
         this.add(time4Game);
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 9;
+        this.gbc.gridwidth = 1;
+        this.gbl.setConstraints(chessboardSizeLab, gbc);
+        this.add(chessboardSizeLab);
         this.gbc.gridx = 1;
         this.gbc.gridy = 9;
+        this.gbc.gridwidth = 1;
+        this.gbl.setConstraints(sizeChessboard, gbc);
+        this.add(sizeChessboard);
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 10;
         this.gbc.gridwidth = 0;
         this.gbl.setConstraints(okButton, gbc);
         this.add(okButton);
@@ -248,6 +268,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             Settings sett = newGUI.getSettings();//sett local settings variable
             Player pl1 = sett.getPlayerWhite();//set local player variable
             Player pl2 = sett.getPlayerBlack();//set local player variable
+            //TODO :  CHANGE SIZE
             sett.setGameMode(Settings.gameModes.newGame);
             //if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText(0,8));
             //TODO: investigate and refactor

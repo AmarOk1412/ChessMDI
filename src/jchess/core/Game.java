@@ -99,7 +99,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         
         
         ChessboardView chessboardView = chessboard.getChessboardView();
-        int chessboardWidth = chessboardView.getChessboardWidht(true);
+        int chessboardWidth = chessboardView.getChessboardWidth(true);
         this.add(chessboardView);
         
         //this.chessboard.
@@ -300,7 +300,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
             ChessboardView chessboardView = chessboard.getChessboardView();
             if (JChessApp.getJavaChessView().getNumberOfOpenedTabs() == 0)
             {
-                chessboardView.resizeChessboard(chessboardView.getChessboardHeight(false));
+                chessboardView.resizeChessboard(chessboardView.getChessboardWidth(false), chessboardView.getChessboardHeight(false));
                 chessboard.repaint();
                 activeGame.repaint();
             }            
@@ -702,13 +702,14 @@ public class Game extends JPanel implements ComponentListener, MouseListener
     public void resizeGame()
     {
         int height = this.getHeight() >= this.getWidth() ? this.getWidth() : this.getHeight();
-        int chessHeight = (int)Math.round((height * 0.88)/8 ) * 8;
+        int chessHeight = (int)Math.round((height * 0.88)/getChessboard().getSize() ) * getChessboard().getSize();
+        int chessWidth = (int)Math.round((height * 0.88)/getChessboard().getSize() ) * getChessboard().getSize();
         int chessWidthWithLabels;
         JScrollPane movesScrollPane = this.getMoves().getScrollPane();
         ChessboardView chessboardView = getChessboard().getChessboardView();
-        chessboardView.resizeChessboard((int)chessHeight);
+        chessboardView.resizeChessboard((int)chessWidth, (int)chessHeight);
         chessHeight = chessboardView.getHeight();
-        chessWidthWithLabels  = chessboardView.getChessboardWidht(true);
+        chessWidthWithLabels  = chessboardView.getChessboardWidth(true);
         movesScrollPane.setLocation(new Point(chessHeight + 5, 100));
         movesScrollPane.setSize(movesScrollPane.getWidth(), chessHeight - 100 - (chessWidthWithLabels/4));
         getGameClock().setLocation(new Point(chessHeight + 5, 0));

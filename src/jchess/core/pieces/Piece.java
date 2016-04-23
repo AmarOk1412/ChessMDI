@@ -168,7 +168,7 @@ public abstract class Piece
      * */
     public boolean isOut(int x, int y)
     {
-        if (x < 0 || x > 7 || y < 0 || y > 7)
+        if (x < 0 || x > getChessboard().getSize()-1 || y < 0 || y > getChessboard().getSize()-1)
         {
             return true;
         }
