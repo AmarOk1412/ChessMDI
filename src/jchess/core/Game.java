@@ -89,6 +89,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
     protected JTabbedPane tabPane;
    
     protected LocalSettingsView localSettingsView;
+    private ChessboardView chessboardView;
 
     public Game()
     {
@@ -98,7 +99,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         chessboard = new Chessboard(this.getSettings(), this.moves);
         
         
-        ChessboardView chessboardView = chessboard.getChessboardView();
+        chessboardView = chessboard.getChessboardView();
         int chessboardWidth = chessboardView.getChessboardWidth(true);
         this.add(chessboardView);
         
@@ -128,6 +129,10 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         this.setDoubleBuffered(true);
         chessboardView.addMouseListener(this);
         this.addComponentListener(this);
+    }
+    
+    public void reset() {
+        //TODO: Not implemented yet
     }
 
     /** Method to save actual state of game

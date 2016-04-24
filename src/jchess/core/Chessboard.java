@@ -47,7 +47,7 @@ import org.apache.log4j.*;
  */
 public class Chessboard 
 {
-    private static final Logger LOG = Logger.getLogger(Chessboard.class);
+    public static final Logger LOG = Logger.getLogger(Chessboard.class);
     
     protected static final int TOP = 0;
     
@@ -102,7 +102,7 @@ public class Chessboard
         this._size = settings.getSize();
         if(this._size < 8)
         {
-        	this.LOG.log(Level.ERROR, "_size < 8. Can't initialize. Exit");
+        	Chessboard.LOG.log(Level.ERROR, "_size < 8. Can't initialize. Exit");
         }
         
         this.squares = new Square[_size][_size];
@@ -147,7 +147,8 @@ public class Chessboard
 
         if (places.equals("")) //if newGame
         {
-            this.setPieces4NewGame(plWhite, plBlack);
+            SetPieces setPieces = new ClassicalSetPieces(this, this._size);
+            setPieces.setPieces4NewGame(plWhite, plBlack);
         } 
         else //if loadedGame
         {
@@ -155,79 +156,6 @@ public class Chessboard
         }
     }/*--endOf-setPieces--*/
 
-
-    /**
-     *
-     */
-    //TODO random :D
-    private void setPieces4NewGame(Player plWhite, Player plBlack)
-    {
-        /* WHITE PIECES */
-        Player player = plBlack;
-        Player player1 = plWhite;
-        this.setFigures4NewGame(0, player);
-        this.setPawns4NewGame(1, player);
-        this.setFigures4NewGame(7, player1);
-        this.setPawns4NewGame(6, player1);
-    }/*--endOf-setPieces(boolean upsideDown)--*/
-
-
-    /**  
-     *  Method to set Figures in row (and set Queen and King to right position)
-     *  @param i row where to set figures (Rook, Knight etc.)
-     *  @param player which is owner of pawns
-     *  @param upsideDown if true white pieces will be on top of chessboard
-     * */
-    private void setFigures4NewGame(int i, Player player)
-    {
-        if (i != 0 && i != 7)
-        {
-            LOG.error("error setting figures like rook etc.");
-            return;
-        }
-        else if (i == 0)
-        {
-            player.goDown = true;
-        }
-
-        this.getSquare(0, i).setPiece(new Rook(this, player));
-        this.getSquare(7, i).setPiece(new Arrow(this, player));
-        this.getSquare(1, i).setPiece(new Knight(this, player));
-        this.getSquare(6, i).setPiece(new Knight(this, player));
-        this.getSquare(2, i).setPiece(new Bishop(this, player));
-        this.getSquare(5, i).setPiece(new Bishop(this, player));
-        
-
-        this.getSquare(3, i).setPiece(new Queen(this, player));
-        if (player.getColor() == Colors.WHITE)
-        {
-            kingWhite = new King(this, player);
-            this.getSquare(4, i).setPiece(kingWhite);
-        }
-        else
-        {
-            kingBlack = new King(this, player);
-            this.getSquare(4, i).setPiece(kingBlack);
-        }
-    }
-
-    /**  method set Pawns in row
-     *  @param i row where to set pawns
-     *  @param player player which is owner of pawns
-     * */
-    private void setPawns4NewGame(int i, Player player)
-    {
-        if (i != 1 && i != 6)
-        {
-            LOG.error("error setting pawns etc.");
-            return;
-        }
-        for (int x = 0; x < _size; x++)
-        {
-            this.getSquare(x, i).setPiece(new Pawn(this, player));
-        }
-    }
-    
     /** Method selecting piece in chessboard
      * @param  sq square to select (when clicked))
      */
@@ -643,6 +571,11 @@ public class Chessboard
     {
         return kingWhite;
     }
+    
+    public void setKingWhite(King king)
+    {
+    	kingWhite = king;
+    }
 
     /**
      * @return the kingBlack
@@ -650,6 +583,11 @@ public class Chessboard
     public King getKingBlack()
     {
         return kingBlack;
+    }
+    
+    public void setKingBlack(King king)
+    {
+    	kingBlack = king;
     }
 
     /**

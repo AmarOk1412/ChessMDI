@@ -269,8 +269,9 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             Player pl1 = sett.getPlayerWhite();//set local player variable
             Player pl2 = sett.getPlayerBlack();//set local player variable
             //TODO :  CHANGE SIZE
+            sett.setSize(new Integer(sizes[this.sizeChessboard.getSelectedIndex()]));
             sett.setGameMode(Settings.gameModes.newGame);
-            //if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText(0,8));
+            if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText().substring(0, 8));
             //TODO: investigate and refactor
             if (this.color.getActionCommand().equals("biały")) //if first player is white
             {
@@ -303,7 +304,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                     + "\ntime 4 game: " + sett.getTimeForGame() + "\ntime limit set: " + sett.isTimeLimitSet()
                     + "\nwhite on top?: " + sett.isUpsideDown() + "\n****************");//4test
             
-            newGUI.newGame();//start new Game
+            newGUI.reset();//start new Game
             this.parent.setVisible(false);//hide parent
             JChessApp.getJavaChessView().getActiveTabGame().repaint();
             JChessApp.getJavaChessView().setActiveTabGame(JChessApp.getJavaChessView().getNumberOfOpenedTabs()-1);
