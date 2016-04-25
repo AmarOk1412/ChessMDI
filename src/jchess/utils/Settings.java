@@ -51,6 +51,7 @@ public class Settings implements Serializable
     protected gameTypes gameType;
     protected boolean renderLabels = true;
     private int size;
+    private String type;
 
     public enum gameTypes
     {
@@ -77,6 +78,7 @@ public class Settings implements Serializable
         gameType = gameTypes.local;
         
         this.size = 8;
+        this.type = "classical";
     }
 
     /**
@@ -138,6 +140,16 @@ public class Settings implements Serializable
     public gameTypes getGameType()
     {
         return gameType;
+    }
+    
+    public String getTypeMode()
+    {
+    	return type;
+    }
+    
+    public void setTypeMode(String t)
+    {
+    	type = t;
     }
 
     /**

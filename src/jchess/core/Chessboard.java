@@ -147,7 +147,21 @@ public class Chessboard
 
         if (places.equals("")) //if newGame
         {
-            SetPieces setPieces = new ClassicalSetPieces(this, this._size);
+            SetPieces setPieces = null;
+            switch (settings.getTypeMode()) {
+			case "classical":
+	            setPieces = new ClassicalSetPieces(this, this._size);
+				break;
+			case "random":
+	            setPieces = new RandomSetPieces(this, this._size);
+				break;
+			case "fullpawn":
+	            setPieces = new FullPawnSetPiece(this, this._size);
+				break;
+			default:
+	            setPieces = new ClassicalSetPieces(this, this._size);
+				break;
+			}
             setPieces.setPieces4NewGame(plWhite, plBlack);
         } 
         else //if loadedGame
@@ -282,7 +296,7 @@ public class Chessboard
                 twoSquareMovedPawn = null; //erase last saved move (for En passant)
             }
 
-            if (end.getPiece().getSquare().getPozY() == 0 || end.getPiece().getSquare().getPozY() == 7) //promote Pawn
+            if (end.getPiece().getSquare().getPozY() == 0 || end.getPiece().getSquare().getPozY() == _size-1) //promote Pawn
             {
                 if (clearForwardHistory)
                 {

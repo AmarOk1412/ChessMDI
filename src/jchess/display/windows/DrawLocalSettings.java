@@ -60,6 +60,10 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
 
     JLabel chessboardSizeLab;
     JComboBox sizeChessboard;
+
+    JLabel gameModeLab;
+    JComboBox gameMode;
+    
     String colors[] =
     {
         Settings.lang("white"), Settings.lang("black")
@@ -69,9 +73,15 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     {
         "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"
     };
+    
     String sizes[] =
     {
         "8", "10", "12", "15", "20"
+    };
+
+    String modes[] =
+    {
+        "classical", "random", "fullpawn"
     };
     
     
@@ -103,10 +113,11 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         this.timeGame = new JCheckBox(Settings.lang("time_game_min"));
         if(actualSettings.isTimeLimitSet()) this.timeGame.setSelected(true);
         this.time4Game = new JComboBox(times);
-        this.time4Game.setSelectedIndex(1); //TODO !!!!
 
         this.chessboardSizeLab = new JLabel(Settings.lang("chessboard_size") + ": ");
         this.sizeChessboard = new JComboBox(sizes);
+        this.gameModeLab = new JLabel(Settings.lang("game_mode") + ": ");
+        this.gameMode = new JComboBox(modes);
 
         this.oponentComp = new JRadioButton(Settings.lang("against_computer"), false);
         this.oponentHuman = new JRadioButton(Settings.lang("against_other_human"), true);
@@ -182,6 +193,16 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         this.add(sizeChessboard);
         this.gbc.gridx = 0;
         this.gbc.gridy = 10;
+        this.gbc.gridwidth = 1;
+        this.gbl.setConstraints(gameModeLab, gbc);
+        this.add(gameModeLab);
+        this.gbc.gridx = 1;
+        this.gbc.gridy = 10;
+        this.gbc.gridwidth = 1;
+        this.gbl.setConstraints(gameMode, gbc);
+        this.add(gameMode);
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 11;
         this.gbc.gridwidth = 0;
         this.gbl.setConstraints(okButton, gbc);
         this.add(okButton);
@@ -268,9 +289,9 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             Settings sett = newGUI.getSettings();//sett local settings variable
             Player pl1 = sett.getPlayerWhite();//set local player variable
             Player pl2 = sett.getPlayerBlack();//set local player variable
-            //TODO :  CHANGE SIZE
             sett.setSize(new Integer(sizes[this.sizeChessboard.getSelectedIndex()]));
             sett.setGameMode(Settings.gameModes.newGame);
+            sett.setTypeMode(modes[this.gameMode.getSelectedIndex()]);
             if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText().substring(0, 8));
             //TODO: investigate and refactor
             if (this.color.getActionCommand().equals("biały")) //if first player is white

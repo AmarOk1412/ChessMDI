@@ -18,14 +18,12 @@ package jchess.utils;
 import jchess.JChessApp;
 import jchess.core.Game;
 import java.awt.*;
-import java.net.*;
 import java.io.*;
 import java.util.Properties;
 import java.io.FileOutputStream;
 import org.apache.log4j.Logger;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import jchess.core.Colors;
 
 /** 
@@ -74,9 +72,10 @@ public class GUI
             return null;
         }
         Image img = null;
+        String imageLink = null;
         try
         {
-            String imageLink = String.format(IMAGE_PATH, getConfigFile().getProperty("THEME", "default"), name);
+            imageLink = String.format(IMAGE_PATH, getConfigFile().getProperty("THEME", "default"), name);
             LOG.debug("THEME: " + getConfigFile().getProperty("THEME"));
             img = ImageIO.read(JChessApp.class.getResourceAsStream(imageLink)); 
         }
