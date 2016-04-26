@@ -10,8 +10,13 @@ import org.junit.Test;
 
 import jchess.core.Chessboard;
 import jchess.core.Colors;
+import jchess.core.ComputerPlayer;
 import jchess.core.Game;
+import jchess.core.GloutonComputerPlayer;
+import jchess.core.RandomComputerPlayer;
+import jchess.core.ScoringVisitor;
 import jchess.core.Square;
+import jchess.core.TypeVisitor;
 import jchess.core.moves.AlgebricChainMove;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.implementation.Bishop;
@@ -204,5 +209,33 @@ public class TestPiece {
         assertTrue(pawn instanceof Pawn);
         assertEquals(Colors.BLACK, pawn.getPlayer().getColor());
         assertEquals(0, pawn.getAllMoves().size());
+    }
+    
+    @Test
+    public void testVisitor()
+    {
+    	board.accept(new ScoringVisitor());
+    	board.accept(new TypeVisitor());
+    }
+    
+
+    @Test
+    public void testAI()
+    {
+    	ComputerPlayer pW = new GloutonComputerPlayer(Colors.WHITE);
+    	ComputerPlayer pB = new RandomComputerPlayer(Colors.BLACK);
+    	
+    	try
+    	{
+	    	for(int i = 0; i < 1000; ++i)
+	    	{
+	    		pW.move(board);
+	    		pB.move(board);
+	    	}
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("gagné, nul ou promotion");
+    	}
     }
 }
