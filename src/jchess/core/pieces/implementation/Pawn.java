@@ -64,7 +64,7 @@ public class Pawn extends Piece
 {
     protected boolean down;
     
-    protected static short value = 1;
+    protected short value = 1;
     
     public Pawn(Chessboard chessboard, Player player)
     {

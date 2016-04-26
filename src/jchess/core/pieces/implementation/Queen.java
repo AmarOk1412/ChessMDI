@@ -41,7 +41,7 @@ import jchess.core.pieces.traits.behaviors.implementation.RookBehavior;
  */
 public class Queen extends Piece
 {
-    protected static final short value = 9;
+    protected final short value = 10;
 
     public Queen(Chessboard chessboard, Player player)
     {

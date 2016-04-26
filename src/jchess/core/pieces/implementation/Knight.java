@@ -27,7 +27,7 @@ import jchess.core.pieces.traits.behaviors.implementation.KnightBehavior;
  */
 public class Knight extends Piece
 {
-    protected static final short value = 3;
+    protected final short value = 3;
 
     public Knight(Chessboard chessboard, Player player)
     {

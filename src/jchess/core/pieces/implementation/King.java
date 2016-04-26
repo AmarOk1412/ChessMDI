@@ -45,7 +45,7 @@ public class King extends Piece
 
     protected boolean wasMotioned = false;
     
-    protected static final short value = 99;
+    protected final short value = 100;
     
 
     public King(Chessboard chessboard, Player player)

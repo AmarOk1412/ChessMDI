@@ -46,7 +46,7 @@ public class Rook extends Piece
 
     protected boolean wasMotioned = false;
     
-    protected static final short value = 5;
+    protected final short value = 5;
 
     public Rook(Chessboard chessboard, Player player)
     {

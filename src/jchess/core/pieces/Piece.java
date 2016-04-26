@@ -53,7 +53,7 @@ public abstract class Piece
     
     protected String symbol;
     
-    protected static short value = 0;
+    protected short value = 0;
     
     protected Set<Behavior> behaviors = new HashSet<>();
 
@@ -71,7 +71,7 @@ public abstract class Piece
     /**
      * @return the value
      */
-    public static short getValue()
+    public short getValue()
     {
         return value;
     }        

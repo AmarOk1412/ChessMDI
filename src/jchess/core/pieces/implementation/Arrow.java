@@ -8,6 +8,7 @@ import jchess.core.pieces.traits.behaviors.implementation.BishopBehavior;
 
 public class Arrow extends Piece
 {
+    protected final short value = 3;
 
 	public Arrow(Chessboard chessboard, Player player) {
 		super(chessboard, player);
