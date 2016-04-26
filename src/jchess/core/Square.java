@@ -112,4 +112,8 @@ public class Square
     {
         return null == this.piece || this.piece == piece;
     }
+
+	public void accept(ChessboardVisitor visitor) {
+		visitor.visit(this);
+	}
 }

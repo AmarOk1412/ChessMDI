@@ -704,4 +704,15 @@ public class Chessboard
     {
         this.activeSquareY = activeSquareY;
     }
+    
+    public void accept(ChessboardVisitor visitor) {    
+    	for (int i = 0; i < _size; i++) //create object for each square
+        {
+            for (int y = 0; y < _size; y++)
+            {
+                squares[i][y].accept(visitor);
+            }
+        }
+        visitor.visit(this);    
+    }
 }
