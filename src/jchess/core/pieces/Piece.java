@@ -15,23 +15,17 @@
 
 package jchess.core.pieces;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+
 import jchess.core.Chessboard;
 import jchess.core.Colors;
 import jchess.core.Player;
 import jchess.core.Square;
 import jchess.core.pieces.traits.behaviors.Behavior;
-import org.apache.log4j.Logger;
 
 /**
  * @author : Mateusz Sławomir Lach ( matlak, msl )
@@ -41,8 +35,6 @@ import org.apache.log4j.Logger;
 public abstract class Piece
 {
 
-    private static final Logger LOG = Logger.getLogger(Piece.class);
-    
     protected Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
     
     protected Square square;
@@ -92,13 +84,13 @@ public abstract class Piece
      * @param square square where piece want to move (Square object)
      * @param allmoves  all moves which can piece do
      * */
-    boolean canMove(Square square, ArrayList allmoves)
+    boolean canMove(Square square, ArrayList<Square> allmoves)
     {
-        ArrayList moves = allmoves;
-        for (Iterator it = moves.iterator(); it.hasNext();)
+        ArrayList<Square> moves = allmoves;
+        for (Iterator<Square> it = moves.iterator(); it.hasNext();)
         {
             Square sq = (Square) it.next();//get next from iterator
-            if (sq == square) //if adress is the same
+            if (sq == square) //if address is the same
             {
                 return true; //piece canMove
             }

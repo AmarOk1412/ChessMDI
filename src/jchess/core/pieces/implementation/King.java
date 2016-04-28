@@ -146,6 +146,7 @@ public class King extends Piece
     	currentSquare.piece = null; 
     	//Check if the king is safe
     	boolean ret = isSafe(this.getSquare());
+    	System.out.println(ret);
     	//Reset configuration
     	futureSquare.piece = actualPiece;
     	currentSquare.piece = pieceToMove;    	

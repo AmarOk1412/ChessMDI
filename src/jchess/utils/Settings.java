@@ -243,11 +243,11 @@ public class Settings implements Serializable
     }
 
 	public int getSize() {
-		return size;
+		return this.size;
 	}
 	
 	public void setSize(int newValue)
 	{
-		size = newValue;
+		this.size = newValue;
 	}
 }
