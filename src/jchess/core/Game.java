@@ -369,6 +369,10 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         }
         else if (activePlayer.getPlayerType() == Player.playerTypes.computer)
         {
+        	checkIfFinish();
+        	activePlayer.computerMove(chessboard);
+        	checkIfFinish();
+        	nextMove();
         }
     }
 
@@ -553,26 +557,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
                         //switch player
                         this.nextMove();
 
-                        //checkmate or stalemate
-                        King king;
-                        if (this.activePlayer == getSettings().getPlayerWhite())
-                        {
-                            king = getChessboard().getKingWhite();
-                        }
-                        else
-                        {
-                            king = getChessboard().getKingBlack();
-                        }
-
-                        switch (king.isCheckmatedOrStalemated())
-                        {
-                            case 1:
-                                this.endGame("Checkmate! " + king.getPlayer().getColor().toString() + " player lose!");
-                                break;
-                            case 2:
-                                this.endGame("Stalemate! Draw!");
-                                break;
-                        }
+                        checkIfFinish();
                     }
                     
                 } 
@@ -591,7 +576,31 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         //chessboard.repaint();
     }
     
-    @Override
+    private void checkIfFinish() {
+    	//checkmate or stalemate
+        King king;
+        if (this.activePlayer == getSettings().getPlayerWhite())
+        {
+            king = getChessboard().getKingWhite();
+        }
+        else
+        {
+            king = getChessboard().getKingBlack();
+        }
+
+        switch (king.isCheckmatedOrStalemated())
+        {
+            case 1:
+                this.endGame("Checkmate! " + king.getPlayer().getColor().toString() + " player lose!");
+                break;
+            case 2:
+                this.endGame("Stalemate! Draw!");
+                break;
+        }
+		
+	}
+
+	@Override
     public void mouseReleased(MouseEvent arg0)
     {
     }

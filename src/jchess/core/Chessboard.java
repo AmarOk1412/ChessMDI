@@ -341,14 +341,18 @@ public class Chessboard
             repaint();
         }
 
+        Integer duration = this.Moves.getGame().getGameClock().getTime4Game();
+        for(Move m : this.Moves.getHistoryOfMoves())
+        	duration -= new Integer(m.getDuration());
+        duration -= this.Moves.getGame().getGameClock().getLeftTime();
         if (clearForwardHistory)
         {
             this.Moves.clearMoveForwardStack();
-            this.Moves.addMove(tempBegin, tempEnd, true, wasCastling, wasEnPassant, promotedPiece);
+            this.Moves.addMove(tempBegin, tempEnd, true, wasCastling, wasEnPassant, promotedPiece, duration.toString(), Moves.getGame().getActivePlayer().getName());
         }
         else
         {
-            this.Moves.addMove(tempBegin, tempEnd, false, wasCastling, wasEnPassant, promotedPiece);
+            this.Moves.addMove(tempBegin, tempEnd, false, wasCastling, wasEnPassant, promotedPiece, duration.toString(), Moves.getGame().getActivePlayer().getName());
         }
     }/*endOf-move()-*/
 

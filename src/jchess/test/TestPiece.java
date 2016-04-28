@@ -13,6 +13,7 @@ import jchess.core.Colors;
 import jchess.core.ComputerPlayer;
 import jchess.core.Game;
 import jchess.core.GloutonComputerPlayer;
+import jchess.core.MinMaxComputerPlayer;
 import jchess.core.RandomComputerPlayer;
 import jchess.core.ScoringVisitor;
 import jchess.core.Square;
@@ -222,7 +223,7 @@ public class TestPiece {
     @Test
     public void testAI()
     {
-    	ComputerPlayer pW = new GloutonComputerPlayer(Colors.WHITE);
+    	ComputerPlayer pW = new MinMaxComputerPlayer(Colors.WHITE);
     	ComputerPlayer pB = new RandomComputerPlayer(Colors.BLACK);
     	
     	try
@@ -235,6 +236,7 @@ public class TestPiece {
     	}
     	catch(Exception e)
     	{
+    		System.out.println(e.getMessage());
     		System.out.println("gagné, nul ou promotion");
     	}
     }

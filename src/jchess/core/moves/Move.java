@@ -34,8 +34,10 @@ public class Move
     protected boolean wasEnPassant = false;
     protected Castling castlingMove = Castling.NONE;
     protected boolean wasPawnTwoFieldsMove = false;
+    private String duration = null;
+    private String comment = null;
 
-    public Move(Square from, Square to, Piece movedPiece, Piece takenPiece, Castling castlingMove, boolean wasEnPassant, Piece promotedPiece)
+    public Move(Square from, Square to, Piece movedPiece, Piece takenPiece, Castling castlingMove, boolean wasEnPassant, Piece promotedPiece, String duration, String comment)
     {
         this.from = from;
         this.to = to;
@@ -54,6 +56,9 @@ public class Move
         {
             this.promotedTo = promotedPiece;
         }
+        
+        this.duration = duration;
+        this.comment = comment;
     }
 
     public Square getFrom()
@@ -95,4 +100,20 @@ public class Move
     {
         return this.promotedTo;
     }
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 }

@@ -17,7 +17,11 @@ package jchess.display.windows;
 
 import jchess.JChessApp;
 import jchess.core.Game;
+import jchess.core.GloutonComputerPlayer;
+import jchess.core.MinMaxComputerPlayer;
 import jchess.core.Player;
+import jchess.core.RandomComputerPlayer;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -131,7 +135,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
 
         this.oponentChoos.add(oponentComp);
         this.oponentChoos.add(oponentHuman);
-        this.computerLevel.setEnabled(false);
         this.computerLevel.setMaximum(3);
         this.computerLevel.setMinimum(1);
 
@@ -206,7 +209,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         this.gbc.gridwidth = 0;
         this.gbl.setConstraints(okButton, gbc);
         this.add(okButton);
-        this.oponentComp.setEnabled(false);//for now, becouse not implemented!
 
     }
         
@@ -284,7 +286,9 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 JOptionPane.showMessageDialog(this, Settings.lang("fill_name"));
                 return;
             }
-            Game newGUI = JChessApp.getJavaChessView().getActiveTabGame();
+            //Game newGUI = JChessApp.getJavaChessView().getActiveTabGame();
+
+        	Game newGUI = new Game();
             
             Settings sett = newGUI.getSettings();//sett local settings variable
             Player pl1 = sett.getPlayerWhite();//set local player variable
@@ -307,9 +311,23 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             pl1.setType(Player.playerTypes.localUser);//set type of player
             pl2.setType(Player.playerTypes.localUser);//set type of player
             sett.setGameType(Settings.gameTypes.local);
-            if (this.oponentComp.isSelected()) //if computer oponent is checked
+            if (this.oponentComp.isSelected()) //if computer opponent is checked
             {
                 pl2.setType(Player.playerTypes.computer);
+                switch (this.computerLevel.getValue()) {
+				case 1:
+					pl2.setComputerPlayer(new RandomComputerPlayer(pl2.getColor()));
+					break;
+				case 2:
+					pl2.setComputerPlayer(new GloutonComputerPlayer(pl2.getColor()));
+					break;
+				case 3:
+					pl2.setComputerPlayer(new MinMaxComputerPlayer(pl2.getColor()));
+					break;
+				default:
+					pl2.setComputerPlayer(new RandomComputerPlayer(pl2.getColor()));
+					break;
+				}
             }
             sett.setUpsideDown(this.upsideDown.isSelected());
             if (this.timeGame.isSelected()) //if timeGame is checked
@@ -325,7 +343,9 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                     + "\ntime 4 game: " + sett.getTimeForGame() + "\ntime limit set: " + sett.isTimeLimitSet()
                     + "\nwhite on top?: " + sett.isUpsideDown() + "\n****************");//4test
             
-            newGUI.reset();//start new Game
+            newGUI.newGame();//TODO
+            JChessApp.getJavaChessView().gamesPane.addTab(pl1.getName() + " vs. " + pl2.getName(), newGUI);//TODO
+            newGUI.reset();//start new Game TODO
             this.parent.setVisible(false);//hide parent
             JChessApp.getJavaChessView().getActiveTabGame().repaint();
             JChessApp.getJavaChessView().setActiveTabGame(JChessApp.getJavaChessView().getNumberOfOpenedTabs()-1);

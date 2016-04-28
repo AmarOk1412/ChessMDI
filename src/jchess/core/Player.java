@@ -35,6 +35,7 @@ public class Player implements Serializable
 	private Colors color;
     private playerTypes playerType; //TODO: Useful ?
     public boolean goDown; //TODO: Move
+    private ComputerPlayer _computer;
 
     public enum playerTypes //TODO: Useful ?
     {
@@ -53,6 +54,7 @@ public class Player implements Serializable
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
         this.playerType = this.playerType.localUser;
+        this._computer = null;
     }
 
     /**
@@ -66,6 +68,7 @@ public class Player implements Serializable
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
         this.playerType = this.playerType.localUser;
+        this._computer = null;
     }
 
     /** Method setting the players name
@@ -91,6 +94,10 @@ public class Player implements Serializable
     {
         this.playerType = type;
     }
+    
+    public void setComputerPlayer(ComputerPlayer computer) {
+    	this._computer = computer;
+    }
 
     /**
      * @return the color
@@ -114,5 +121,12 @@ public class Player implements Serializable
     public boolean isGoDown()
     {
         return goDown;
-    }    
+    }
+    
+    public void computerMove(Chessboard board)
+    {
+    	if(_computer != null)
+    		_computer.move(board);
+    	//TODO log else
+    }
 }

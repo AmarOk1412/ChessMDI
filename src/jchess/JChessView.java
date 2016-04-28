@@ -587,7 +587,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu gameMenu;
-    private javax.swing.JTabbedPane gamesPane;
+    public javax.swing.JTabbedPane gamesPane;//TODO
     private javax.swing.JMenuItem loadGameItem;
     public javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;

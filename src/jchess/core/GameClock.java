@@ -43,6 +43,7 @@ public class GameClock extends JPanel implements Runnable
     private String white_clock, black_clock;
     private BufferedImage background;
     private Graphics bufferedGraphics;
+    private int time4game = 0;
 
 	private boolean _isRunning;
 
@@ -56,9 +57,7 @@ public class GameClock extends JPanel implements Runnable
         this.settings = game.getSettings();
         this.background = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
 
-        int time = this.settings.getTimeForGame();
-
-        this.setTimes(time, time);
+        this.setTimes(time4game, time4game);
         this.setPlayers(this.settings.getPlayerBlack(), this.settings.getPlayerWhite());
 
         this.thread = new Thread(this);
@@ -187,6 +186,10 @@ public class GameClock extends JPanel implements Runnable
             this.runningClock = this.clock1;
         }
     }
+    
+    public int getLeftTime() {
+    	return this.clock1.getLeftTime() + this.clock2.getLeftTime();
+    }
 
     /** Method with is setting the players clocks time
      * @param t1 Capt the player time
@@ -196,6 +199,7 @@ public class GameClock extends JPanel implements Runnable
     {
         /*rather in chess game players got the same time 4 game, so why in documentation
          * this method've 2 parameters ? */
+        time4game = t1+t2;
         this.clock1.init(t1);
         this.clock2.init(t2);
     }
@@ -276,5 +280,9 @@ public class GameClock extends JPanel implements Runnable
 
 	public boolean isRunning() {
 		return _isRunning;
+	}
+	
+	public int getTime4Game() {
+		return this.time4game;
 	}
 }
