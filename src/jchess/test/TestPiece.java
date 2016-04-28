@@ -44,12 +44,12 @@ public class TestPiece {
         settings = new Settings();
         board = new Game().getChessboard(); // new Chessboard(settings, new Moves(new Game()));
 
-
         // Game g = new Game();
         // #1 bad API design
         // g.newGame(); // fails because coupled to GUI concerns and tabs stuff
         // anyway
         board.setPieces("", settings.getPlayerWhite(), settings.getPlayerBlack());
+
 
 
         // #2 bad API design
@@ -104,11 +104,6 @@ public class TestPiece {
         Piece p4 = board.getSquare("e4").getPiece(); // and there is a pawn in e4
         assertTrue(p4 instanceof Pawn);
         assertEquals(Colors.WHITE, p4.getPlayer().getColor());
-
-
-
-
-
     }
 
     @Test
@@ -217,6 +212,24 @@ public class TestPiece {
     {
     	board.accept(new ScoringVisitor());
     	board.accept(new TypeVisitor());
+    }
+    
+
+    
+    @Test
+    public void testWillBeSafe()
+    {
+        new AlgebricChainMove(board).from("d2").to("d4").move();
+        new AlgebricChainMove(board).from("d7").to("d5").move();
+        new AlgebricChainMove(board).from("e2").to("e4").move();
+        new AlgebricChainMove(board).from("e8").to("d7").move();
+        new AlgebricChainMove(board).from("f2").to("f4").move();
+        new AlgebricChainMove(board).from("d7").to("e6").move();
+        new AlgebricChainMove(board).from("e4").to("e5").move();
+        new AlgebricChainMove(board).from("e6").to("f6").move();
+        new AlgebricChainMove(board).from("g2").to("g4").move();
+        //ICI Le roi peut faire f6 e5 alors qu'il ne devrait pas...
+        new AlgebricChainMove(board).from("f6").to("e5").move(); //should fail
     }
     
 

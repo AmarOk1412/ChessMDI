@@ -286,9 +286,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 JOptionPane.showMessageDialog(this, Settings.lang("fill_name"));
                 return;
             }
-            //Game newGUI = JChessApp.getJavaChessView().getActiveTabGame();
-
-        	Game newGUI = new Game();
+            Game newGUI = JChessApp.getJavaChessView().getActiveTabGame();
             
             Settings sett = newGUI.getSettings();//sett local settings variable
             Player pl1 = sett.getPlayerWhite();//set local player variable
@@ -342,10 +340,10 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             LOG.debug("****************\nStarting new game: " + pl1.getName() + " vs. " + pl2.getName()
                     + "\ntime 4 game: " + sett.getTimeForGame() + "\ntime limit set: " + sett.isTimeLimitSet()
                     + "\nwhite on top?: " + sett.isUpsideDown() + "\n****************");//4test
-            
-            newGUI.newGame();//TODO
-            JChessApp.getJavaChessView().gamesPane.addTab(pl1.getName() + " vs. " + pl2.getName(), newGUI);//TODO
-            newGUI.reset();//start new Game TODO
+
+            newGUI.getChessboard().initSquares();
+            newGUI.newGame();
+            newGUI.resizeGame();
             this.parent.setVisible(false);//hide parent
             JChessApp.getJavaChessView().getActiveTabGame().repaint();
             JChessApp.getJavaChessView().setActiveTabGame(JChessApp.getJavaChessView().getNumberOfOpenedTabs()-1);
