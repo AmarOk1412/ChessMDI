@@ -213,6 +213,21 @@ public class Chessboard {
 		}
 		this.move(fromSQ, toSQ, true, true);
 	}
+	
+	/*public void testMove(int xFrom, int yFrom, int xTo, int yTo) {
+		Square fromSQ = null;
+		Square toSQ = null;
+		try {
+			fromSQ = this.getSquares()[xFrom][yFrom];
+			toSQ = this.getSquares()[xTo][yTo];
+		} catch (java.lang.IndexOutOfBoundsException exc) {
+			LOG.error("error moving piece: " + exc.getMessage());
+			return;
+		}
+		toSQ.piece = null;
+		toSQ.piece = fromSQ.getPiece();
+		fromSQ.piece = null;
+	}*/
 
 	/**
 	 * Method move piece from square to square

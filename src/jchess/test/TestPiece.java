@@ -43,7 +43,7 @@ public class TestPiece {
 
         settings = new Settings();
         board = new Game().getChessboard(); // new Chessboard(settings, new Moves(new Game()));
-
+        board.setSettings(settings);
         // Game g = new Game();
         // #1 bad API design
         // g.newGame(); // fails because coupled to GUI concerns and tabs stuff
@@ -178,6 +178,7 @@ public class TestPiece {
         rook = board.getSquare("a3").getPiece();
         assertTrue(rook instanceof Rook);
         assertEquals(Colors.WHITE, rook.getPlayer().getColor());
+        System.out.println(rook.getAllMoves());
         assertEquals(9, rook.getAllMoves().size());
 
     }

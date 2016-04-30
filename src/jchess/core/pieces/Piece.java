@@ -131,7 +131,7 @@ public abstract class Piece
 
     /**
      * Annotation to superclass Piece changing pawns location
-     * @return  ArrayList with new possition of piece
+     * @return  ArrayList with new position of piece
      */
     public Set<Square> getAllMoves()
     {
