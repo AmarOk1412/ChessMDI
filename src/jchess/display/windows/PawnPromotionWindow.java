@@ -34,9 +34,6 @@ import jchess.utils.GUI;
  */
 public class PawnPromotionWindow extends JDialog implements ActionListener
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JButton knightButton;
 	private JButton bishopButton;
@@ -94,7 +91,7 @@ public class PawnPromotionWindow extends JDialog implements ActionListener
         this.bishopButton.setIcon(new ImageIcon(GUI.loadImage("Bishop-" + color + ".png")));
         this.rookButton.setIcon(new ImageIcon(GUI.loadImage("Rook-" + color + ".png")));
         this.queenButton.setIcon(new ImageIcon(GUI.loadImage("Queen-" + color + ".png")));
-        this.arrowButton.setIcon(new ImageIcon(GUI.loadImage("Knight-" + color + ".png")));//TODO change to Arrow image
+        this.arrowButton.setIcon(new ImageIcon(GUI.loadImage("Arrow-" + color + ".png")));//TODO change to Arrow image
     }
 
     /** Method wich is changing a pawn into queen, rook, bishop or knight
