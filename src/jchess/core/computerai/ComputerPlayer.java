@@ -12,4 +12,5 @@ public abstract class ComputerPlayer {
 	}
 	
 	public abstract void move(Chessboard board);
+	public abstract void move(Chessboard board, boolean debug);
 }

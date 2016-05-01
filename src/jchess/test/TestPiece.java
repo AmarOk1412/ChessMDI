@@ -13,8 +13,8 @@ import jchess.core.Colors;
 import jchess.core.Game;
 import jchess.core.Square;
 import jchess.core.computerai.ComputerPlayer;
+import jchess.core.computerai.GloutonComputerPlayer;
 import jchess.core.computerai.MinMaxComputerPlayer;
-import jchess.core.computerai.RandomComputerPlayer;
 import jchess.core.moves.AlgebricChainMove;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.implementation.Bishop;
@@ -236,12 +236,33 @@ public class TestPiece {
 		}
     }
     
+    @Test
+    public void testGlouton()
+    {
+    	ComputerPlayer pB = new GloutonComputerPlayer(Colors.BLACK);
+		try {
+			new AlgebricChainMove(board).from("d2").to("d4").move();
+			new AlgebricChainMove(board).from("e7").to("e5").move();
+			new AlgebricChainMove(board).from("d1").to("d3").move();
+			new AlgebricChainMove(board).from("a7").to("a6").move();
+			new AlgebricChainMove(board).from("d3").to("c3").move();
+			pB.move(board, true);
+			new AlgebricChainMove(board).from("a2").to("a3").move();
+			pB.move(board, true);
+	        Piece pawn = board.getSquare("c3").getPiece();
+	        assertTrue(pawn instanceof Pawn);
+	        assertEquals(Colors.BLACK, pawn.getPlayer().getColor());
+		} catch (Exception e) {
+			assertEquals(1, 0);
+		}
+    }
+    
 
     @Test
     public void testAI()
     {
     	ComputerPlayer pW = new MinMaxComputerPlayer(Colors.WHITE);
-    	ComputerPlayer pB = new RandomComputerPlayer(Colors.BLACK);
+    	ComputerPlayer pB = new GloutonComputerPlayer(Colors.BLACK);
     	
     	try
     	{

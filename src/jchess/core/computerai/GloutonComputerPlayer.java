@@ -26,6 +26,11 @@ public class GloutonComputerPlayer extends ComputerPlayer {
 
 	@Override
 	public void move(Chessboard board) {
+		move(board, false);
+	}
+	
+	@Override
+	public void move(Chessboard board, boolean debug) {
 		//Get all pieces
 		Map<Entry<Piece, Square>, Integer> pieces = getPossibleMoves(board);
 		//Sort Map by score (value)
@@ -52,7 +57,10 @@ public class GloutonComputerPlayer extends ComputerPlayer {
 		Chessboard.LOG.debug(_color + ": Move " + pieceToMove.getName() 
 		+ " : from " + fromSquare.getPozX() + "-" + fromSquare.getPozY()
 		+ " : to " + endSquare.getPozX() + "-" + endSquare.getPozY());
-		board.move(fromSquare, endSquare);	
+		if(debug)
+			board.testMove(fromSquare.getPozX(), fromSquare.getPozY(), endSquare.getPozX(), endSquare.getPozY());
+		else
+			board.move(fromSquare, endSquare);	
 	}
 
 	//Map<Entry<Piece, possibleSquare>, score>

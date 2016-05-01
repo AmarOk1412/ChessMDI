@@ -18,6 +18,11 @@ public class RandomComputerPlayer extends ComputerPlayer {
 
 	@Override
 	public void move(Chessboard board) {
+		move(board, false);
+	}
+	
+	@Override
+	public void move(Chessboard board, boolean debug) {
 		//Get all pieces
 		List<Piece> pieces = getPossiblePieces(board);
 		//Get random Piece
@@ -31,7 +36,10 @@ public class RandomComputerPlayer extends ComputerPlayer {
 		Chessboard.LOG.debug(_color + ": Move " + pieceToMove.getName() 
 		+ " : from " + fromSquare.getPozX() + "-" + fromSquare.getPozY()
 		+ " : to " + endSquare.getPozX() + "-" + endSquare.getPozY());
-		board.move(fromSquare, endSquare);
+		if(debug)
+			board.testMove(fromSquare.getPozX(), fromSquare.getPozY(), endSquare.getPozX(), endSquare.getPozY());
+		else
+			board.move(fromSquare, endSquare);
 	}
 	
 	private List<Piece>  getPossiblePieces(Chessboard board) {

@@ -326,7 +326,9 @@ public class Chessboard {
 				if (clearForwardHistory) {
 					String color = String
 							.valueOf(end.getPiece().getPlayer().getColor().getSymbolAsString().toUpperCase());
-					String newPiece = JChessApp.getJavaChessView().showPawnPromotionBox(color); // return
+					String newPiece = "Queen";
+					if(!end.getPiece().getPlayer().getPlayerType().equals(Player.playerTypes.computer))
+					newPiece = JChessApp.getJavaChessView().showPawnPromotionBox(color); // return
 																								// name
 																								// of
 																								// new
