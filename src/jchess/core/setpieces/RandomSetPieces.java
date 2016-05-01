@@ -1,7 +1,10 @@
-package jchess.core;
+package jchess.core.setpieces;
 
 import java.util.Random;
 
+import jchess.core.Chessboard;
+import jchess.core.Colors;
+import jchess.core.Player;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.implementation.Arrow;
 import jchess.core.pieces.implementation.Bishop;

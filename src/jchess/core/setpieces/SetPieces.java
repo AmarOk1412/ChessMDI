@@ -1,4 +1,7 @@
-package jchess.core;
+package jchess.core.setpieces;
+
+import jchess.core.Chessboard;
+import jchess.core.Player;
 
 public abstract class SetPieces {
 	

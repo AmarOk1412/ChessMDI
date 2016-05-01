@@ -37,15 +37,15 @@ public class Pieces2D
     
     private static final String FILE_EXT = ".png"; 
     
-    protected Map<Colors, Map<String, Image>> currentImageSet = new HashMap<>();
+    private Map<Colors, Map<String, Image>> currentImageSet = new HashMap<>();
     
-    protected static Pieces2D instance = null;
+    private static Pieces2D instance = null;
     
-    protected static int currentSize = 55;
+    private static int currentSize = 55;
     
-    protected static TreeSet<Integer> setsSizes = new TreeSet<>(Arrays.asList(25, 55, 70, 100));
+    private static TreeSet<Integer> setsSizes = new TreeSet<>(Arrays.asList(25, 55, 70, 100));
     
-    protected static Map<Integer, Map<Colors, Map<String, Image>>> imageSets = initImagesSets();
+    private static Map<Integer, Map<Colors, Map<String, Image>>> imageSets = initImagesSets();
     
     /**
      * @return the images
@@ -79,7 +79,7 @@ public class Pieces2D
         currentSize = aCurrentSize;
     }
     
-    protected Pieces2D()
+    private Pieces2D()
     {
         currentImageSet = imageSets.get(currentSize);
     }
@@ -112,8 +112,7 @@ public class Pieces2D
     
     private static Map<String, Image> getPieceMap(Colors color, int size)
     {
-        Map<String, Image> result = new HashMap<>();  
-        
+        Map<String, Image> result = new HashMap<>();
         result.put(Pawn.class.getName(), GUI.loadPieceImage(Pawn.class.getSimpleName(), color, size, FILE_EXT));
         result.put(Knight.class.getName(), GUI.loadPieceImage(Knight.class.getSimpleName(), color, size, FILE_EXT));
         result.put(Queen.class.getName(), GUI.loadPieceImage(Queen.class.getSimpleName(), color, size, FILE_EXT));

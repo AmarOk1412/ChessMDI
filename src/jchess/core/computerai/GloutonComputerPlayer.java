@@ -1,4 +1,4 @@
-package jchess.core;
+package jchess.core.computerai;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -11,17 +11,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.Set;
 
+import jchess.core.Chessboard;
+import jchess.core.Colors;
+import jchess.core.Square;
 import jchess.core.pieces.Piece;
-import jchess.core.pieces.implementation.Arrow;
-import jchess.core.pieces.implementation.Bishop;
-import jchess.core.pieces.implementation.King;
-import jchess.core.pieces.implementation.Knight;
-import jchess.core.pieces.implementation.Pawn;
-import jchess.core.pieces.implementation.Queen;
-import jchess.core.pieces.implementation.Rook;
 
 public class GloutonComputerPlayer extends ComputerPlayer {
 
@@ -42,7 +37,6 @@ public class GloutonComputerPlayer extends ComputerPlayer {
 		Entry<Entry<Piece, Square>, Integer> best = iter.next();
 		bestMoves.add(best.getKey());
 		int bestScore = best.getValue();
-		System.out.println("b:" + bestScore);
 		while (iter.hasNext()) {
 			Entry<Entry<Piece, Square>, Integer> current = iter.next();
 		    if(current.getValue() != bestScore)
@@ -55,7 +49,7 @@ public class GloutonComputerPlayer extends ComputerPlayer {
 		Square fromSquare = pieceToMove.getSquare() ;
 		Square endSquare = bestMoves.get(0).getValue();
 		//Move
-		System.out.println(_color + ": Move " + pieceToMove.getName() 
+		Chessboard.LOG.debug(_color + ": Move " + pieceToMove.getName() 
 		+ " : from " + fromSquare.getPozX() + "-" + fromSquare.getPozY()
 		+ " : to " + endSquare.getPozX() + "-" + endSquare.getPozY());
 		board.move(fromSquare, endSquare);	
@@ -77,23 +71,12 @@ public class GloutonComputerPlayer extends ComputerPlayer {
                 	Iterator<Square> iter = possibleSquare.iterator();
                 	while (iter.hasNext()) {
                 		Square sq = iter.next();
-                		Entry<Piece, Square> couple = new AbstractMap.SimpleEntry(p, sq);
+                		Entry<Piece, Square> couple = new AbstractMap.SimpleEntry<Piece, Square>(p, sq);
 
             			int scorePiece = 0;
             			Piece future = sq.getPiece();
-            			
-            			if(future instanceof Pawn)
-            				scorePiece += 1;
-            			else if(future instanceof Bishop || 
-            					future instanceof Knight ||
-            					future instanceof Arrow)
-            				scorePiece += 3;
-            			else if(future instanceof Rook)
-            				scorePiece += 5;
-            			else if(future instanceof Queen)
-            				scorePiece += 10;
-            			else if(future instanceof King)
-            				scorePiece += 1000;
+            			if(future != null)
+            				scorePiece = future.getScore();
                 		result.put(couple, scorePiece);
                 	}
                 }

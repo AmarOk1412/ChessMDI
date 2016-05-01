@@ -34,6 +34,8 @@ package jchess.core.pieces.implementation;
         |_|_|_|_|_|_|_|_|0
         0 1 2 3 4 5 6 7
  */
+import java.util.Set;
+
 import jchess.core.pieces.Piece;
 import jchess.core.Chessboard;
 import jchess.core.Player;
@@ -42,139 +44,146 @@ import jchess.core.pieces.traits.behaviors.implementation.KingBehavior;
 
 public class King extends Piece
 {
+	protected boolean wasMotioned = false;
 
-    protected boolean wasMotioned = false;
-    
-    protected final short value = 100;
-    
+	protected static final int value = 99;
 
-    public King(Chessboard chessboard, Player player)
-    {
-        super(chessboard, player);
-        this.symbol = "K";
-        this.addBehavior(new KingBehavior(this));
-    }
-    
-    /** Method to check is the king is checked
-     *  @return bool true if king is not save, else returns false
-     */
-    public boolean isChecked()
-    {
-        return !isSafe(this.square);
-    }
+	public King(Chessboard chessboard, Player player)
+	{
+		super(chessboard, player);
+		this.symbol = "K";
+		this.addBehavior(new KingBehavior(this));
+	}
+	/** Method to check is the king is checked
+	 *  @return bool true if king is not save, else returns false
+	 */
+	public boolean isChecked()
+	{
+		return !isSafe(this.square);
+	}
 
-    /** Method to check is the king is checked or stalemated
-     *  @return int 0 if nothing, 1 if checkmate, else returns 2
-     */
-    public int isCheckmatedOrStalemated()
-    {
-        /*
-         *returns: 0-nothing, 1-checkmate, 2-stalemate
-         */
-        if (this.getAllMoves().isEmpty())
-        {
-            for (int i = 0; i < getChessboard().getSize(); ++i)
-            {
-                for (int j = 0; j < getChessboard().getSize(); ++j)
-                {
-                    Piece piece = getChessboard().getSquare(i, j).getPiece();
-                    if (null != piece && piece.getPlayer() == this.getPlayer() && !piece.getAllMoves().isEmpty())
-                    {
-                        return 0;
-                    }
-                }
-            }
+	/** Method to check is the king is checked or stalemated
+	 *  @return int 0 if nothing, 1 if checkmate, else returns 2
+	 */
+	public int isCheckmatedOrStalemated()
+	{
+		/*
+		 *returns: 0-nothing, 1-checkmate, 2-stalemate
+		 */
+		if (this.getAllMoves().isEmpty())
+		{
+			for (int i = 0; i < 8; ++i)
+			{
+				for (int j = 0; j < 8; ++j)
+				{
+					Piece piece = getChessboard().getSquare(i, j).getPiece();
+					if (null != piece && piece.getPlayer() == this.getPlayer() && !piece.getAllMoves().isEmpty())
+					{
+						return 0;
+					}
+				}
+			}
 
-            if (this.isChecked())
-            {
-                return 1;
-            }
-            else
-            {
-                return 2;
-            }
-        }
-        else
-        {
-            return 0;
-        }
-    }
-    
-    /**
-     * Method to check is the king is checked by an opponent
-     * @return bool true if king is save, else returns false
-     */
-    public boolean isSafe()
-    {
-        return isSafe(getSquare());
-    }
+			if (this.isChecked())
+			{
+				return 1;
+			}
+			else
+			{
+				return 2;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
-    /** Method to check is the king is checked by an opponent
-     * @param s Squere where is a king
-     * @return bool true if king is save, else returns false
-     */
-    public boolean isSafe(Square s)
-    {
-        Square[][] squares = chessboard.getSquares();
-        for(int i=0; i<squares.length; i++)
-        {
-            for(int j=0; j<squares[i].length; j++)
-            {
-                Square sq = squares[i][j];
-                Piece piece = sq.getPiece();
-                if(piece != null) 
-                {
-                    if(piece.getPlayer().getColor() != this.getPlayer().getColor())
-                    {
-                        if(piece.getSquaresInRange().contains(s))
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-    
-    public boolean ourKingWillBeSafeAfterMove(Square currentSquare, Square futureSquare)
-    {
-    	//Simulate one move
-    	Piece pieceToMove = currentSquare.getPiece();
-    	Piece actualPiece = futureSquare.getPiece();
-    	futureSquare.piece = pieceToMove;
-    	currentSquare.piece = null; 
-    	//Check if the king is safe
-    	boolean ret = isSafe(this.getSquare());
-    	System.out.println(ret);
-    	//Reset configuration
-    	futureSquare.piece = actualPiece;
-    	currentSquare.piece = pieceToMove;    	
-    	return ret;
-    }
+	/**
+	 * Method to check is the king is checked by an opponent
+	 * @return bool true if king is save, else returns false
+	 */
+	public boolean isSafe()
+	{
+		return isSafe(getSquare());
+	}
 
-    /** Method to check will the king be safe when move
-     *  @return bool true if king is save, else returns false
-     */
-    public boolean willBeSafeAfterMove(Square currentSquare, Square futureSquare)
-    {
-    	Piece piece = currentSquare.getPiece();
-    	return piece instanceof King ? isSafe(futureSquare) : ourKingWillBeSafeAfterMove(currentSquare, futureSquare);
-    }
+	/** Method to check is the king is checked by an opponent
+	 * @param s Square where is the king
+	 * @return bool true if king is safe, else returns false
+	 */
+	public boolean isSafe(Square s)
+	{
+		Square[][] squares = chessboard.getSquares();
 
-    /**
-     * @return the wasMotion
-     */
-    public boolean getWasMotioned()
-    {
-        return wasMotioned;
-    }
+		for(int i=0; i<squares.length; i++)
+		{
+			for(int j=0; j<squares[i].length; j++)
+			{
+				Square sq = squares[i][j];
+				Piece piece = sq.getPiece();
 
-    /**
-     * @param wasMotioned the wasMotion to set
-     */
-    public void setWasMotioned(boolean wasMotioned)
-    {
-        this.wasMotioned = wasMotioned;
-    }
+				if(piece != null) 
+				{
+					if(piece.getPlayer().getColor() != this.getPlayer().getColor() )
+					{
+						Set<Square> dangerousSquares = piece.getSquaresInRange();
+						
+						if(dangerousSquares.contains(s)){
+
+							if(piece instanceof Pawn){									
+									if (!((Math.abs(s.getPozY() - piece.getSquare().getPozY()) == 1) && s.getPozX() == piece.getSquare().getPozX())) {
+										
+										return false;
+									}
+							}
+							else{
+								return false;
+							}
+							
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	/** Method to check will the king be safe when move
+	 *  @return bool true if king is save, else returns false
+	 */
+	public boolean willBeSafeAfterMove(Square currentSquare, Square futureSquare)
+	{
+		Piece tmp = futureSquare.getPiece();
+		futureSquare.setPiece(currentSquare.getPiece());
+		currentSquare.setPiece(null);
+
+		boolean ret = (futureSquare.getPiece().equals(this))? isSafe(futureSquare) : isSafe(this.getSquare());
+
+		currentSquare.setPiece(futureSquare.getPiece());
+		futureSquare.setPiece(tmp);
+
+		return ret;
+	}
+
+	/**
+	 * @return the wasMotion
+	 */
+	public boolean getWasMotioned()
+	{
+		return wasMotioned;
+	}
+
+	/**
+	 * @param wasMotioned the wasMotion to set
+	 */
+	public void setWasMotioned(boolean wasMotioned)
+	{
+		this.wasMotioned = wasMotioned;
+	}
+
+	@Override
+	public int getScore() {
+		return value;
+	}
 }

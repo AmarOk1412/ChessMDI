@@ -20,25 +20,27 @@
  */
 package jchess.core.moves;
 
-import jchess.core.Chessboard;
-import jchess.core.Game;
-import jchess.core.Player;
-import jchess.core.pieces.Piece;
-import java.util.ArrayList;
-import java.util.Stack;
-import java.awt.Point;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.*;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Set;
+import java.util.Stack;
+
 import javax.swing.JOptionPane;
-import jchess.core.Colors;
-import jchess.utils.Settings;
-import jchess.core.Square;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+
 import org.apache.log4j.Logger;
+
+import jchess.core.Chessboard;
+import jchess.core.Colors;
+import jchess.core.Game;
+import jchess.core.Square;
+import jchess.core.pieces.Piece;
+import jchess.utils.Settings;
 
 /** Class representing the players moves, it's also checking
  * that the moves taken by player are correct.
@@ -48,7 +50,9 @@ import org.apache.log4j.Logger;
  */
 public class Moves extends AbstractTableModel
 {
-    private static final Logger LOG = Logger.getLogger(Moves.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOG = Logger.getLogger(Moves.class);
     
     private ArrayList<String> move = new ArrayList<String>();
     private int columnsNum = 3;
@@ -189,7 +193,6 @@ public class Moves extends AbstractTableModel
 
     public void addMove(Square begin, Square end, boolean registerInHistory, Castling castlingMove, boolean wasEnPassant, Piece promotedPiece, String duration, String comment)
     {
-        boolean wasCastling = castlingMove != Castling.NONE;
         String locMove = begin.getPiece().getSymbol();
         
         if( game.getSettings().isUpsideDown() )
@@ -209,7 +212,7 @@ public class Moves extends AbstractTableModel
     		game.getGameClock().start();
     	}
         
-        if (end.piece != null)
+        if (end.getPiece() != null)
         {
             locMove += "x";//take down opponent piece
         }
@@ -229,7 +232,7 @@ public class Moves extends AbstractTableModel
             locMove += Integer.toString(8 - end.getPozY());//add number of Square to which move was made
         }
         
-        if (begin.getPiece().getSymbol().equals("") && begin.getPozX() - end.getPozX() != 0 && end.piece == null)
+        if (begin.getPiece().getSymbol().equals("") && begin.getPozX() - end.getPozX() != 0 && end.getPiece() == null)
         {
             locMove += "(e.p)";//pawn take down opponent en passant
             wasEnPassant = true;
@@ -261,7 +264,7 @@ public class Moves extends AbstractTableModel
 
         if (registerInHistory)
         {
-            Move moveToAdd = new Move(new Square(begin), new Square(end), begin.piece, end.piece, castlingMove, wasEnPassant, promotedPiece, duration, comment);
+            Move moveToAdd = new Move(new Square(begin), new Square(end), begin.getPiece(), end.getPiece(), castlingMove, wasEnPassant, promotedPiece, duration, comment);
             this.moveBackStack.add(moveToAdd);
         }
     }
@@ -479,7 +482,7 @@ public class Moves extends AbstractTableModel
         int from = 0;
         int to = 0;
         int n = 1;
-        ArrayList<String> tempArray = new ArrayList();
+        ArrayList<String> tempArray = new ArrayList<String>();
         int tempStrSize = moves.length() - 1;
         while (true)
         {
@@ -589,7 +592,7 @@ public class Moves extends AbstractTableModel
                 {
                     for(int j=0; j<squares[i].length && !pieceFound; j++)
                     {
-                        if(squares[i][j].piece == null || this.game.getActivePlayer().getColor() != squares[i][j].getPiece().getPlayer().getColor())
+                        if(squares[i][j].getPiece() == null || this.game.getActivePlayer().getColor() != squares[i][j].getPiece().getPlayer().getColor())
                         {
                             continue;
                         }
@@ -639,8 +642,9 @@ public class Moves extends AbstractTableModel
 
 class MyDefaultTableModel extends DefaultTableModel
 {
+	private static final long serialVersionUID = 1L;
 
-    MyDefaultTableModel()
+	MyDefaultTableModel()
     {
         super();
     }

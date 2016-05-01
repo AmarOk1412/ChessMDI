@@ -1,10 +1,13 @@
-package jchess.core;
+package jchess.core.visitor;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import jchess.core.Chessboard;
+import jchess.core.Colors;
+import jchess.core.Square;
 import jchess.core.pieces.Piece;
 
 public class TypeVisitor implements ChessboardVisitor {

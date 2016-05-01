@@ -10,14 +10,11 @@ import org.junit.Test;
 
 import jchess.core.Chessboard;
 import jchess.core.Colors;
-import jchess.core.ComputerPlayer;
 import jchess.core.Game;
-import jchess.core.GloutonComputerPlayer;
-import jchess.core.MinMaxComputerPlayer;
-import jchess.core.RandomComputerPlayer;
-import jchess.core.ScoringVisitor;
 import jchess.core.Square;
-import jchess.core.TypeVisitor;
+import jchess.core.computerai.ComputerPlayer;
+import jchess.core.computerai.MinMaxComputerPlayer;
+import jchess.core.computerai.RandomComputerPlayer;
 import jchess.core.moves.AlgebricChainMove;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.implementation.Bishop;
@@ -26,6 +23,8 @@ import jchess.core.pieces.implementation.Knight;
 import jchess.core.pieces.implementation.Pawn;
 import jchess.core.pieces.implementation.Queen;
 import jchess.core.pieces.implementation.Rook;
+import jchess.core.visitor.ScoringVisitor;
+import jchess.core.visitor.TypeVisitor;
 import jchess.utils.Settings;
 
 /**
@@ -43,13 +42,14 @@ public class TestPiece {
 
         settings = new Settings();
         board = new Game().getChessboard(); // new Chessboard(settings, new Moves(new Game()));
-
-
+        board.setSettings(settings);
         // Game g = new Game();
         // #1 bad API design
         // g.newGame(); // fails because coupled to GUI concerns and tabs stuff
         // anyway
+        board.initSquares();
         board.setPieces("", settings.getPlayerWhite(), settings.getPlayerBlack());
+
 
 
         // #2 bad API design
@@ -104,11 +104,6 @@ public class TestPiece {
         Piece p4 = board.getSquare("e4").getPiece(); // and there is a pawn in e4
         assertTrue(p4 instanceof Pawn);
         assertEquals(Colors.WHITE, p4.getPlayer().getColor());
-
-
-
-
-
     }
 
     @Test
@@ -217,6 +212,28 @@ public class TestPiece {
     {
     	board.accept(new ScoringVisitor());
     	board.accept(new TypeVisitor());
+    }
+    
+
+    
+    @Test
+    public void testWillBeSafe()
+    {
+        try {
+			new AlgebricChainMove(board).from("d2").to("d4").move();
+	        new AlgebricChainMove(board).from("d7").to("d5").move();
+	        new AlgebricChainMove(board).from("e2").to("e4").move();
+	        new AlgebricChainMove(board).from("e8").to("d7").move();
+	        new AlgebricChainMove(board).from("f2").to("f4").move();
+	        new AlgebricChainMove(board).from("d7").to("e6").move();
+	        new AlgebricChainMove(board).from("e4").to("e5").move();
+	        new AlgebricChainMove(board).from("e6").to("f6").move();
+	        new AlgebricChainMove(board).from("g2").to("g4").move();
+	        new AlgebricChainMove(board).from("f6").to("e5").move(); // Should fail
+	        assertEquals(1, 0);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
     }
     
 

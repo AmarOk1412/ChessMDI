@@ -35,7 +35,7 @@ import jchess.core.pieces.traits.behaviors.Behavior;
 public abstract class Piece
 {
 
-    protected Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
+    protected Chessboard chessboard;
     
     protected Square square;
     
@@ -45,7 +45,7 @@ public abstract class Piece
     
     protected String symbol;
     
-    protected short value = 0;
+    protected final int value = 0;
     
     protected Set<Behavior> behaviors = new HashSet<>();
 
@@ -58,15 +58,7 @@ public abstract class Piece
     }
     /* Method to draw piece on chessboard
      * @graph : where to draw
-     */
-    
-    /**
-     * @return the value
-     */
-    public short getValue()
-    {
-        return value;
-    }        
+     */    
     
     public void addBehavior(Behavior behavior)
     {
@@ -131,7 +123,7 @@ public abstract class Piece
 
     /**
      * Annotation to superclass Piece changing pawns location
-     * @return  ArrayList with new possition of piece
+     * @return  ArrayList with new position of piece
      */
     public Set<Square> getAllMoves()
     {
@@ -176,12 +168,12 @@ public abstract class Piece
      * */
     public boolean checkPiece(int x, int y)
     {
-        if (getChessboard().getSquares()[x][y].piece != null
+        if (getChessboard().getSquares()[x][y].getPiece() != null
                 && getChessboard().getSquares()[x][y].getPiece().getName().equals("King"))
         {
             return false;
         }
-        Piece piece = getChessboard().getSquares()[x][y].piece;
+        Piece piece = getChessboard().getSquares()[x][y].getPiece();
         if (piece == null || //if this sqhuare is empty
                 piece.getPlayer() != this.getPlayer()) //or piece is another player
         {
@@ -198,7 +190,7 @@ public abstract class Piece
     public boolean otherOwner(int x, int y)
     {
         Square sq = getChessboard().getSquares()[x][y];
-        if (sq.piece == null)
+        if (sq.getPiece() == null)
         {
             return false;
         }
@@ -276,5 +268,9 @@ public abstract class Piece
     public void setName(String name)
     {
         this.name = name;
+    }
+    
+    public int getScore() {
+    	return 0;
     }
 }

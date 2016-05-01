@@ -64,7 +64,7 @@ public class Pawn extends Piece
 {
     protected boolean down;
     
-    protected short value = 1;
+    protected final int value = 1;
     
     public Pawn(Chessboard chessboard, Player player)
     {
@@ -85,4 +85,9 @@ public class Pawn extends Piece
     {
         return down;
     }
+
+	@Override
+	public int getScore() {
+		return value;
+	}
 }

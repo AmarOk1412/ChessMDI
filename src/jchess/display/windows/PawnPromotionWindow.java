@@ -34,14 +34,15 @@ import jchess.utils.GUI;
  */
 public class PawnPromotionWindow extends JDialog implements ActionListener
 {
-	JButton knightButton;
-    JButton bishopButton;
-    JButton rookButton;
-    JButton queenButton;
-    JButton arrowButton;
-    GridBagLayout gbl;
-    public String result;
-    GridBagConstraints gbc;
+	private static final long serialVersionUID = 1L;
+	private JButton knightButton;
+	private JButton bishopButton;
+	private JButton rookButton;
+	private JButton queenButton;
+	private JButton arrowButton;
+	private GridBagLayout gbl;
+	private String result;
+	private GridBagConstraints gbc;
 
     public PawnPromotionWindow(Frame parent, String color)
     {        
@@ -54,16 +55,16 @@ public class PawnPromotionWindow extends JDialog implements ActionListener
         this.setLayout(new GridLayout(1, 4));
 
 
-        this.gbl = new GridBagLayout();
+        this.setGbl(new GridBagLayout());
 
-        this.gbc = new GridBagConstraints();
+        this.setGbc(new GridBagConstraints());
 
         this.knightButton = new JButton();
         this.bishopButton = new JButton();
         this.rookButton = new JButton();
         this.queenButton = new JButton();
         this.arrowButton = new JButton();
-        this.result = "";
+        this.setResult("");
 
         this.knightButton.addActionListener(this);
         this.bishopButton.addActionListener(this);
@@ -90,7 +91,7 @@ public class PawnPromotionWindow extends JDialog implements ActionListener
         this.bishopButton.setIcon(new ImageIcon(GUI.loadImage("Bishop-" + color + ".png")));
         this.rookButton.setIcon(new ImageIcon(GUI.loadImage("Rook-" + color + ".png")));
         this.queenButton.setIcon(new ImageIcon(GUI.loadImage("Queen-" + color + ".png")));
-        this.arrowButton.setIcon(new ImageIcon(GUI.loadImage("Knight-" + color + ".png")));//TODO change to Arrow image
+        this.arrowButton.setIcon(new ImageIcon(GUI.loadImage("Arrow-" + color + ".png")));//TODO change to Arrow image
     }
 
     /** Method wich is changing a pawn into queen, rook, bishop or knight
@@ -100,24 +101,48 @@ public class PawnPromotionWindow extends JDialog implements ActionListener
     {
         if (arg0.getSource() == queenButton)
         {
-            result = "Queen";
+            setResult("Queen");
         }
         else if (arg0.getSource() == rookButton)
         {
-            result = "Rook";
+            setResult("Rook");
         }
         else if (arg0.getSource() == bishopButton)
         {
-            result = "Bishop";
+            setResult("Bishop");
         }
         else if (arg0.getSource() == arrowButton)
         {
-            result = "Arrow";
+            setResult("Arrow");
         }
         else //knight
         {
-            result = "Knight";
+            setResult("Knight");
         }
         this.setVisible(false);
     }
+
+	public GridBagLayout getGbl() {
+		return gbl;
+	}
+
+	public void setGbl(GridBagLayout gbl) {
+		this.gbl = gbl;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public GridBagConstraints getGbc() {
+		return gbc;
+	}
+
+	public void setGbc(GridBagConstraints gbc) {
+		this.gbc = gbc;
+	}
 }

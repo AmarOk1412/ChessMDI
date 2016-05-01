@@ -26,7 +26,9 @@ import org.apache.log4j.Logger;
  */
 public class Chessboard2D extends ChessboardView 
 {
-    private static final Logger LOG = Logger.getLogger(Chessboard2D.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOG = Logger.getLogger(Chessboard2D.class);
     
     protected Pieces2D pieces2D = Pieces2D.getInstance();
 
@@ -175,7 +177,6 @@ public class Chessboard2D extends ChessboardView
     }   
     
     @Override
-    //TODO width
     public final void resizeChessboard(int width, int height)
     {
         if (0 != width && 0 != height)
@@ -240,7 +241,6 @@ public class Chessboard2D extends ChessboardView
 
     protected final void drawLabels(int squareHeight)
     {
-        //BufferedImage uDL = new BufferedImage(800, 800, BufferedImage.TYPE_3BYTE_BGR);
         int minLabelHeight = 20;
         int labelHeight = (int) Math.ceil(squareHeight / 4);
         labelHeight = (labelHeight < minLabelHeight) ? minLabelHeight : labelHeight;
@@ -277,7 +277,7 @@ public class Chessboard2D extends ChessboardView
         else
         {
             int j = 1;
-            for (int i = letters.length; i > 0; i--, j++)
+            for (int i = getChessboard().getSize(); i > 0; i--, j++)
             {
                 uDL2D.drawString(letters[i - 1], (squareHeight * (j - 1)) + addX, 10 + (labelHeight / 3));
             }
@@ -289,7 +289,6 @@ public class Chessboard2D extends ChessboardView
         uDL2D = (Graphics2D) uDL.createGraphics();
         uDL2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         uDL2D.setColor(Color.white);
-        //uDL2D.fillRect(0, 0, 800, 800);
         uDL2D.fillRect(0, 0, labelHeight, labelWidth + minLabelHeight);
         uDL2D.setColor(Color.black);
         uDL2D.setFont(new Font("Arial", Font.BOLD, 12));
@@ -320,7 +319,7 @@ public class Chessboard2D extends ChessboardView
             Set<Square> moves = getChessboard().getMoves();
             if (null != moves)
             {
-                for (Iterator it = moves.iterator(); it.hasNext();)
+                for (Iterator<Square> it = moves.iterator(); it.hasNext();)
                 {
                     Square sq = (Square) it.next();
                     int ableSquarePosX = sq.getPozX();
@@ -354,7 +353,7 @@ public class Chessboard2D extends ChessboardView
         
         Square tmpSquare = squares[activeSquare.getPozX()][activeSquare.getPozY()];
         
-        if (null != tmpSquare.piece)
+        if (null != tmpSquare.getPiece())
         {
             Set<Square> moves = tmpSquare.getPiece().getAllMoves();
             this.getChessboard().setMoves(moves);

@@ -26,14 +26,14 @@ import jchess.core.Square;
 public class Move
 {
 
-    protected Square from = null;
-    protected Square to = null;
-    protected Piece movedPiece = null;
-    protected Piece takenPiece = null;
-    protected Piece promotedTo = null;
-    protected boolean wasEnPassant = false;
-    protected Castling castlingMove = Castling.NONE;
-    protected boolean wasPawnTwoFieldsMove = false;
+    private Square from = null;
+    private Square to = null;
+    private Piece movedPiece = null;
+    private Piece takenPiece = null;
+    private Piece promotedTo = null;
+    private boolean wasEnPassant = false;
+    private Castling castlingMove = Castling.NONE;
+    private boolean wasPawnTwoFieldsMove = false;
     private String duration = null;
     private String comment = null;
 

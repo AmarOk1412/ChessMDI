@@ -46,7 +46,7 @@ public class Rook extends Piece
 
     protected boolean wasMotioned = false;
     
-    protected final short value = 5;
+    protected final int value = 5;
 
     public Rook(Chessboard chessboard, Player player)
     {
@@ -70,4 +70,9 @@ public class Rook extends Piece
     {
         this.wasMotioned = wasMotioned;
     }
+
+	@Override
+	public int getScore() {
+		return value;
+	}
 }

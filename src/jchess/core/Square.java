@@ -16,6 +16,7 @@
 package jchess.core;
 
 import jchess.core.pieces.Piece;
+import jchess.core.visitor.ChessboardVisitor;
 
 /**
  * @author: Mateusz Sławomir Lach ( matlak, msl )
@@ -37,7 +38,7 @@ public class Square
     /**
      * object Piece on square (and extending Piecie)
      */
-    public Piece piece = null;
+    private Piece piece = null;
     
     public Square()
     {
@@ -66,7 +67,7 @@ public class Square
         return new Square(square);
     }
 
-    void setPiece(Piece piece)
+    public void setPiece(Piece piece)
     {
         this.piece = piece;
         if(piece != null)

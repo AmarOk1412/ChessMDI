@@ -17,10 +17,10 @@ package jchess.display.windows;
 
 import jchess.JChessApp;
 import jchess.core.Game;
-import jchess.core.GloutonComputerPlayer;
-import jchess.core.MinMaxComputerPlayer;
 import jchess.core.Player;
-import jchess.core.RandomComputerPlayer;
+import jchess.core.computerai.GloutonComputerPlayer;
+import jchess.core.computerai.MinMaxComputerPlayer;
+import jchess.core.computerai.RandomComputerPlayer;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -38,52 +38,48 @@ import org.apache.log4j.Logger;
  */
 public class DrawLocalSettings extends JPanel implements ActionListener, TextListener
 {
+	private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = Logger.getLogger(DrawLocalSettings.class);
+	private static final Logger LOG = Logger.getLogger(DrawLocalSettings.class);
     
-    JDialog parent;//needet to close newGame window
-    JComboBox color;//to choose color of player
-    JRadioButton oponentComp;//choose oponent
-    JRadioButton oponentHuman;//choose oponent (human)
-    ButtonGroup oponentChoos;//group 4 radio buttons
-    JFrame localPanel;
-    JLabel compLevLab;
-    JSlider computerLevel;//slider to choose jChess Engine level
-    JTextField firstName;//editable field 4 nickname
-    JTextField secondName;//editable field 4 nickname
-    JLabel firstNameLab;
-    JLabel secondNameLab;
-    JCheckBox upsideDown;//if true draw chessboard upsideDown(white on top)
-    GridBagLayout gbl;
-    GridBagConstraints gbc;
-    Container cont;
-    JSeparator sep;
-    JButton okButton;
-    JCheckBox timeGame;
-    JComboBox time4Game;
-
-    JLabel chessboardSizeLab;
-    JComboBox sizeChessboard;
-
-    JLabel gameModeLab;
-    JComboBox gameMode;
+	private JDialog parent;//needet to close newGame window
+	private JComboBox<String> color;//to choose color of player
+	private JRadioButton oponentComp;//choose oponent
+	private JRadioButton oponentHuman;//choose oponent (human)
+	private ButtonGroup oponentChoos;//group 4 radio buttons
+	private JLabel compLevLab;
+	private JSlider computerLevel;//slider to choose jChess Engine level
+	private JTextField firstName;//editable field 4 nickname
+	private JTextField secondName;//editable field 4 nickname
+	private JLabel firstNameLab;
+	private JLabel secondNameLab;
+	private JCheckBox upsideDown;//if true draw chessboard upsideDown(white on top)
+	private GridBagLayout gbl;
+	private GridBagConstraints gbc;
+	private JButton okButton;
+	private JCheckBox timeGame;
+	private JComboBox<String> time4Game;
+	private JLabel chessboardSizeLab;
+    private JComboBox<String> sizeChessboard;
+    private JLabel gameModeLab;
+    private JComboBox<String> gameMode;
     
-    String colors[] =
+    private String colors[] =
     {
         Settings.lang("white"), Settings.lang("black")
     };
     
-    String times[] =
+    private String times[] =
     {
         "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"
     };
     
-    String sizes[] =
+    private String sizes[] =
     {
         "8", "10", "12", "15", "20"
     };
 
-    String modes[] =
+    private String modes[] =
     {
         "classical", "random", "fullpawn"
     };
@@ -94,16 +90,15 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     {
         super();
         Settings actualSettings = JChessApp.getJavaChessView().getActiveTabGame().getSettings();
-        //this.setA//choose oponent
+        
         this.parent = parent;
-        this.color = new JComboBox(colors);
+        this.color = new JComboBox<String>(colors);
         this.gbl = new GridBagLayout();
         this.gbc = new GridBagConstraints();
-        this.sep = new JSeparator();
+        new JSeparator();
         this.okButton = new JButton(Settings.lang("ok"));
         this.compLevLab = new JLabel(Settings.lang("computer_level"));
 
-        //TODO : warning, player1 != white sometimes
         this.firstName = new JTextField(actualSettings.getPlayerWhite().getName(), 10);
         this.firstName.setSize(new Dimension(200, 50));
         this.secondName = new JTextField(actualSettings.getPlayerBlack().getName(), 10);
@@ -116,12 +111,12 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         if(actualSettings.isUpsideDown()) this.upsideDown.setSelected(true);
         this.timeGame = new JCheckBox(Settings.lang("time_game_min"));
         if(actualSettings.isTimeLimitSet()) this.timeGame.setSelected(true);
-        this.time4Game = new JComboBox(times);
+        this.time4Game = new JComboBox<String>(times);
 
         this.chessboardSizeLab = new JLabel(Settings.lang("chessboard_size") + ": ");
-        this.sizeChessboard = new JComboBox(sizes);
+        this.sizeChessboard = new JComboBox<String>(sizes);
         this.gameModeLab = new JLabel(Settings.lang("game_mode") + ": ");
-        this.gameMode = new JComboBox(modes);
+        this.gameMode = new JComboBox<String>(modes);
 
         this.oponentComp = new JRadioButton(Settings.lang("against_computer"), false);
         this.oponentHuman = new JRadioButton(Settings.lang("against_other_human"), true);
@@ -294,9 +289,8 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             sett.setSize(new Integer(sizes[this.sizeChessboard.getSelectedIndex()]));
             sett.setGameMode(Settings.gameModes.newGame);
             sett.setTypeMode(modes[this.gameMode.getSelectedIndex()]);
-            if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText().substring(0, 8));
-            //TODO: investigate and refactor
-            if (this.color.getActionCommand().equals("biały")) //if first player is white
+            if(this.firstName.getText().length() > 9 ) this.firstName.setText(this.firstName.getText().substring(0, 8));
+            if (this.color.getSelectedIndex() == 0) //if first player is white
             {
                 pl1.setName(this.firstName.getText());//set name of player
                 pl2.setName(this.secondName.getText());//set name of player
@@ -336,7 +330,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 newGUI.getGameClock().setTimes(sett.getTimeForGame(), sett.getTimeForGame());
             }
             LOG.debug("this.time4Game.getActionCommand(): " + this.time4Game.getActionCommand());
-            //this.time4Game.getComponent(this.time4Game.getSelectedIndex());
             LOG.debug("****************\nStarting new game: " + pl1.getName() + " vs. " + pl2.getName()
                     + "\ntime 4 game: " + sett.getTimeForGame() + "\ntime limit set: " + sett.isTimeLimitSet()
                     + "\nwhite on top?: " + sett.isUpsideDown() + "\n****************");//4test

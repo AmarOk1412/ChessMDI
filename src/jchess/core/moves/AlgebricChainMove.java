@@ -6,7 +6,6 @@ import jchess.core.Chessboard;
 
 public class AlgebricChainMove extends MoveBuilder {
 
-	//TODO more ?
     private static final Logger LOG = Logger.getLogger(Chessboard.class);  
 	private String _horizontal = "abcdefgh";
     private String _vertical = "87654321";

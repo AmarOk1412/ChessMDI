@@ -1,5 +1,8 @@
-package jchess.core;
+package jchess.core.setpieces;
 
+import jchess.core.Chessboard;
+import jchess.core.Colors;
+import jchess.core.Player;
 import jchess.core.pieces.implementation.Bishop;
 import jchess.core.pieces.implementation.King;
 import jchess.core.pieces.implementation.Knight;

@@ -41,7 +41,7 @@ import jchess.core.pieces.traits.behaviors.implementation.BishopBehavior;
  */
 public class Bishop extends Piece
 {
-    protected final short value = 3;
+    protected final int value = 3;
 
     public Bishop(Chessboard chessboard, Player player)
     {
@@ -49,4 +49,9 @@ public class Bishop extends Piece
         this.symbol = "B";
         this.addBehavior(new BishopBehavior(this));
     }
+
+	@Override
+	public int getScore() {
+		return value;
+	}
 }
