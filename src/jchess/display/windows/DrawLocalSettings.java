@@ -289,9 +289,8 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             sett.setSize(new Integer(sizes[this.sizeChessboard.getSelectedIndex()]));
             sett.setGameMode(Settings.gameModes.newGame);
             sett.setTypeMode(modes[this.gameMode.getSelectedIndex()]);
-            if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText().substring(0, 8));
-            //TODO: investigate and refactor
-            if (this.color.getActionCommand().equals("biały")) //if first player is white
+            if(this.firstName.getText().length() > 9 ) this.firstName.setText(this.firstName.getText().substring(0, 8));
+            if (this.color.getSelectedIndex() == 0) //if first player is white
             {
                 pl1.setName(this.firstName.getText());//set name of player
                 pl2.setName(this.secondName.getText());//set name of player
