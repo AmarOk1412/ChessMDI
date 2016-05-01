@@ -149,7 +149,7 @@ public class TestPiece {
         knight = board.getSquare("c3").getPiece();
         assertTrue(knight instanceof Knight);
         assertEquals(Colors.WHITE, knight.getPlayer().getColor());
-    //TODO wut?    assertEquals(5, knight.getAllMoves().size());
+        assertEquals(5, knight.getAllMoves().size());
 
     }
 
@@ -177,7 +177,7 @@ public class TestPiece {
         rook = board.getSquare("a3").getPiece();
         assertTrue(rook instanceof Rook);
         assertEquals(Colors.WHITE, rook.getPlayer().getColor());
-//TODO: wut?        assertEquals(9, rook.getAllMoves().size());
+        assertEquals(9, rook.getAllMoves().size());
 
     }
     
@@ -192,19 +192,19 @@ public class TestPiece {
         Piece king = board.getSquare("e8").getPiece();
         assertTrue(king instanceof King);
         assertEquals(Colors.BLACK, king.getPlayer().getColor());
-        //TODO wut ? assertEquals(1, king.getAllMoves().size());
+        assertEquals(1, king.getAllMoves().size());
         Piece bishop = board.getSquare("c8").getPiece();
         assertTrue(bishop instanceof Bishop);
         assertEquals(Colors.BLACK, bishop.getPlayer().getColor());
-      //TODO wut ? assertEquals(1, bishop.getAllMoves().size());
+        assertEquals(1, bishop.getAllMoves().size());
         Piece queen = board.getSquare("d6").getPiece();
         assertTrue(queen instanceof Queen);
         assertEquals(Colors.BLACK, queen.getPlayer().getColor());
-      //TODO wut ? assertEquals(2, queen.getAllMoves().size());
+        assertEquals(2, queen.getAllMoves().size());
         Piece pawn = board.getSquare("b7").getPiece();
         assertTrue(pawn instanceof Pawn);
         assertEquals(Colors.BLACK, pawn.getPlayer().getColor());
-      //TODO wut ?  assertEquals(0, pawn.getAllMoves().size());
+        assertEquals(0, pawn.getAllMoves().size());
     }
     
     @Test
@@ -219,17 +219,21 @@ public class TestPiece {
     @Test
     public void testWillBeSafe()
     {
-        new AlgebricChainMove(board).from("d2").to("d4").move();
-        new AlgebricChainMove(board).from("d7").to("d5").move();
-        new AlgebricChainMove(board).from("e2").to("e4").move();
-        new AlgebricChainMove(board).from("e8").to("d7").move();
-        new AlgebricChainMove(board).from("f2").to("f4").move();
-        new AlgebricChainMove(board).from("d7").to("e6").move();
-        new AlgebricChainMove(board).from("e4").to("e5").move();
-        new AlgebricChainMove(board).from("e6").to("f6").move();
-        new AlgebricChainMove(board).from("g2").to("g4").move();
-        //ICI Le roi peut faire f6 e5 alors qu'il ne devrait pas...
-        new AlgebricChainMove(board).from("f6").to("e5").move(); //should fail
+        try {
+			new AlgebricChainMove(board).from("d2").to("d4").move();
+	        new AlgebricChainMove(board).from("d7").to("d5").move();
+	        new AlgebricChainMove(board).from("e2").to("e4").move();
+	        new AlgebricChainMove(board).from("e8").to("d7").move();
+	        new AlgebricChainMove(board).from("f2").to("f4").move();
+	        new AlgebricChainMove(board).from("d7").to("e6").move();
+	        new AlgebricChainMove(board).from("e4").to("e5").move();
+	        new AlgebricChainMove(board).from("e6").to("f6").move();
+	        new AlgebricChainMove(board).from("g2").to("g4").move();
+	        new AlgebricChainMove(board).from("f6").to("e5").move(); // Should fail
+	        assertEquals(1, 0);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
     }
     
 

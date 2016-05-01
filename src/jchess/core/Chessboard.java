@@ -219,6 +219,13 @@ public class Chessboard {
 		this.move(fromSQ, toSQ, true, true);
 	}
 	
+	/**
+	 * A move function for test unit
+	 * @param xFrom
+	 * @param yFrom
+	 * @param xTo
+	 * @param yTo
+	 */
 	public void testMove(int xFrom, int yFrom, int xTo, int yTo) {
 		Square fromSQ = null;
 		Square toSQ = null;
@@ -231,6 +238,7 @@ public class Chessboard {
 		}
 		toSQ.piece = null;
 		toSQ.piece = fromSQ.getPiece();
+		fromSQ.piece.setSquare(toSQ);
 		fromSQ.piece = null;
 	}
 
