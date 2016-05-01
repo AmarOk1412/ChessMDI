@@ -84,7 +84,7 @@ public class JChessApp extends SingleFrameApplication {
         }
         catch (NullPointerException | IOException e)
         {
-            System.err.println("Logging not enabled : "+e.getMessage());
+            System.err.println("Logging not enabled : " + e.getMessage());
         } 
     }
 }

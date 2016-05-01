@@ -214,7 +214,7 @@ public class Chessboard {
 		this.move(fromSQ, toSQ, true, true);
 	}
 	
-	/*public void testMove(int xFrom, int yFrom, int xTo, int yTo) {
+	public void testMove(int xFrom, int yFrom, int xTo, int yTo) {
 		Square fromSQ = null;
 		Square toSQ = null;
 		try {
@@ -227,7 +227,7 @@ public class Chessboard {
 		toSQ.piece = null;
 		toSQ.piece = fromSQ.getPiece();
 		fromSQ.piece = null;
-	}*/
+	}
 
 	/**
 	 * Method move piece from square to square

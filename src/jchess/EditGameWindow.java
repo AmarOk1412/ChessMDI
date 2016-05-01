@@ -21,6 +21,7 @@
 package jchess;
 
 import javax.swing.*;
+
 import jchess.utils.Settings;
 import jchess.display.windows.DrawLocalSettings;
 
@@ -31,7 +32,12 @@ import jchess.display.windows.DrawLocalSettings;
  */
 public class EditGameWindow extends JDialog {
 
-    private JTabbedPane jTabbedPane1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private JTabbedPane jTabbedPane1;
 
     /** Creates new form NewGameWindow */
     public EditGameWindow() {
@@ -39,7 +45,6 @@ public class EditGameWindow extends JDialog {
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.jTabbedPane1.addTab(Settings.lang("local_game"), new DrawLocalSettings(this));
-
     }
 
     /** This method is called from within the constructor to

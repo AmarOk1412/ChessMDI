@@ -12,7 +12,7 @@ public abstract class MoveBuilder {
 
     public void move()
     {
-    	_board.move(_xFrom, _yFrom, _xTo, _yTo);
+    	_board.testMove(_xFrom, _yFrom, _xTo, _yTo);
     }
 
 }
