@@ -1,0 +1,142 @@
+@startuml
+package "jchess" {
+    class JChessApp
+    class JChessView
+
+    package "core" {
+        class Chessboard
+        class Clock
+        enum Color
+        class Game
+        class GameClock
+        class Player
+        class Square
+
+        package "computerai" {
+          abstract class ComputerPlayer
+          ComputerPlayer <|-- class RandomComputerPlayer
+          ComputerPlayer <|-- class MinMaxComputerPlayer
+          ComputerPlayer <|-- class GloutonComputerPlayer
+        }
+
+        package "moves" {
+            abstract class MoveBuilder
+            MoveBuilder <|-- class AlgebricChainMove
+            MoveBuilder <|-- class NumericChainMove
+            enum Castling
+            class Move
+            class Moves
+        }
+
+        package "setpieces" {
+            abstract class SetPieces
+            SetPieces <|-- FullPawnSetPieces
+            SetPieces <|-- RandomSetPieces
+            SetPieces <|-- ClassicalSetPieces
+        }
+
+        package "visitor" {
+            abstract class ChessboardVisitor
+            ChessboardVisitor <|-- ScoringVisitor
+            ChessboardVisitor <|-- TypeVisitor
+        }
+
+        package "pieces" {
+            abstract class Piece
+            package "implementation" {
+                Piece <|-- class Bishop
+                Piece <|-- class King
+                Piece <|-- class Knight
+                Piece <|-- class Pawn
+                Piece <|-- class Queen
+                Piece <|-- class Rook
+                Piece <|-- class Arrow
+            }
+
+            package "traits.behaviors" {
+                class Behavior
+
+                package "traits.behaviors.implementation" {
+                    Behavior <|-- class KingBehavior
+                    Behavior <|-- class KnightBehavior
+                    Behavior <|-- class PawnBehavior
+                    Behavior <|-- abstract class LongRangePieceBehavior
+                    LongRangePieceBehavior <|-- class BishopBehavior
+                    LongRangePieceBehavior <|-- class RookBehavior
+                    LongRangePieceBehavior <|-- class ArrowBehavior
+                }
+            }
+        }
+
+    package "display" {
+        package "panels" {
+            class LocalSettingsView
+        }
+        package "views" {
+            package "chessboard" {
+                interface ChessboardMouseView
+                abstract class ChessboardView
+                package "implementations" {
+                    ChessboardView <|-- class Chessboard2D
+                    class Pieces2D
+                }
+            }
+            package "windows" {
+                class DrawLocalSettings
+                class EditGameWindow
+                class JChessAboutBox
+                class JChessTabbedPane
+                class PawnPromotionWindow
+                class ThemeChooseWindow
+            }
+        }
+    }
+
+
+    package "utils" {
+        class Settings
+        class GUI
+    }
+
+}
+
+
+JChessApp *-- JChessView : jChessView
+JChessView *-- GUI : gui
+JChessView *-- PawnPromotionWindow : promotionBox
+Chessboard  "1" *-- "many" Square
+Chessboard *-- ChessboardView
+Chessboard  o-- Settings : settings
+Chessboard o-- Moves
+Chessboard "1" *-- "2" King
+Chessboard "1" *-- "1" Pawn
+Clock o-- Player
+Game *-- Settings : settings
+Game *-- Chessboard : chessboard
+Game *-- Player : activePlayer
+Game *-- GameClock : gameClock
+Game *-- Moves
+Game *-- LocalSettingsView
+Game *-- ChessboardView : chessboardView
+Game *-- Square : sq
+GameClock "1" *-- "3" Clock
+GameClock o-- Game
+GameClock o-- Settings : settings
+Player *-- ComputerPlayer : _computer
+Square *-- Piece : piece
+Move "1" o-- "3" Piece
+Move "1" *-- "2" Square
+Move "1" o-- "1" Castling
+MoveBuilder *-- Chessboard : _board
+Moves "1" *-- "Many" Move
+Moves *-- Game : game
+Piece o-- Square
+Piece o-- Chessboard : chessboard
+Piece "1" o-- "Many" Behavior : behaviors
+Behavior o-- Piece : piece
+SetPieces *-- Chessboard : _chessboard
+LocalSettingsView *-- Game : game
+Chessboard2D o-- Pieces2D : pieces2D
+GUI *-- Game : game
+ChessboardView o-- chessboard : chessboard
+@enduml
