@@ -18,6 +18,7 @@ package jchess;
 import jchess.core.Game;
 import jchess.core.Player;
 
+import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
@@ -235,6 +236,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 		return newGUI;
 	}
 
+	@Action
 	public void showAboutBox() {
 		if (aboutBox == null) {
 			JFrame mainFrame = JChessApp.getApplication().getMainFrame();
@@ -254,7 +256,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 		promotionBox.setColor(color);
 		JChessApp.getApplication().show(promotionBox);
 
-		return promotionBox.result;
+		return promotionBox.getResult();
 	}
 
 	/**

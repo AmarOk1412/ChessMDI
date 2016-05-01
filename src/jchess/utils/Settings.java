@@ -33,23 +33,24 @@ import jchess.core.Colors;
  */
 public class Settings implements Serializable
 {
-    private static final Logger LOG = Logger.getLogger(Settings.class);
+	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(Settings.class);
     private static ResourceBundle loc = null;
-    protected int timeForGame;
-    protected boolean runningChat;
-    protected boolean runningGameClock;
+    private int timeForGame;
+    private boolean runningChat;
+    private boolean runningGameClock;
     
     /**
      * tel us if player choose time 4 game or it's infinity
      */
-    protected boolean timeLimitSet = false;
-    protected boolean upsideDown;
-    protected boolean displayLegalMovesEnabled = true;
-    protected gameModes gameMode;
-    protected Player playerWhite;
-    protected Player playerBlack;
-    protected gameTypes gameType;
-    protected boolean renderLabels = true;
+    private boolean timeLimitSet = false;
+    private boolean upsideDown;
+    private boolean displayLegalMovesEnabled = true;
+    private gameModes gameMode;
+    private Player playerWhite;
+    private Player playerBlack;
+    private gameTypes gameType;
+    private boolean renderLabels = true;
     private int size;
     private String type;
 
@@ -68,7 +69,7 @@ public class Settings implements Serializable
 
     public Settings()
     {
-        //temporally
+    	//Load default settings
         this.playerWhite = new Player(Colors.WHITE.getColorName());
         this.playerBlack = new Player(Colors.BLACK.getColorName());
         this.timeLimitSet = false;

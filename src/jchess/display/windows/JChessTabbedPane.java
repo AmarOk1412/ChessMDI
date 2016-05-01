@@ -26,7 +26,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jchess.utils.GUI;
 import jchess.JChessApp;
-import jchess.EditGameWindow;
 import jchess.core.Game;
 import org.apache.log4j.Logger;
 
@@ -37,7 +36,9 @@ import org.apache.log4j.Logger;
  */
 public class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver, ChangeListener
 {
-    private static final Logger LOG = Logger.getLogger(GameClock.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOG = Logger.getLogger(GameClock.class);
 
     private TabbedPaneIcon closeIcon;
     
@@ -75,7 +76,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     public void mouseReleased(MouseEvent e){}
 
     @Override
-    public void mousePressed(MouseEvent e){}
+    public void mousePressed(MouseEvent e) {}
 
     private void showNewGameWindow()
     {
@@ -112,6 +113,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
             LOG.debug("newGame by + button");
             this.showNewGameWindow();
         }
+        updateAddIconRect();
     }
 
     @Override
@@ -170,7 +172,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
         {
             JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
             Game game = (Game) sourceTabbedPane.getSelectedComponent();
-            game.resizeGame(); 
+            game.resizeGame();
         }
     }
 }

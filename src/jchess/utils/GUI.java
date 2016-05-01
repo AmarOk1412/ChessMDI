@@ -42,8 +42,6 @@ public class GUI
     
     private Game game;
     
-    private static final Properties CONFIG_FILE = GUI.getConfigFile();
-    
     private static final String IMAGE_PATH = "theme/%s/images/%s";
 
     /**
@@ -52,8 +50,16 @@ public class GUI
     public GUI()
     {
         this.game = new Game();
-    }/*--endOf-GUI--*/
+    }
 
+    /**
+     * Load a piece
+     * @param pieceName
+     * @param color
+     * @param size
+     * @param fileExt
+     * @return
+     */
     public static Image loadPieceImage(String pieceName, Colors color, int size, String fileExt)
     {
         String colorSymbol = String.valueOf(color.getSymbol()).toUpperCase();
@@ -86,13 +92,6 @@ public class GUI
             );
         }
         return img;
-    }/*--endOf-loadImage--*/
-
-
-    public static boolean themeIsValid(String name)
-    {
-        //TODO: implement me
-        return true;
     }
 
     /**
@@ -112,6 +111,10 @@ public class GUI
         return path;
     }
 
+    /**
+     * 
+     * @return the config file
+     */
     public static Properties getConfigFile()
     {
         Properties defConfFile = new Properties();
