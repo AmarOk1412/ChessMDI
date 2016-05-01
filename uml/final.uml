@@ -67,6 +67,7 @@ package "jchess" {
                 }
             }
         }
+    }
 
     package "display" {
         package "panels" {
@@ -137,6 +138,5 @@ Behavior o-- Piece : piece
 SetPieces *-- Chessboard : _chessboard
 LocalSettingsView *-- Game : game
 Chessboard2D o-- Pieces2D : pieces2D
-GUI *-- Game : game
 ChessboardView o-- chessboard : chessboard
 @enduml
