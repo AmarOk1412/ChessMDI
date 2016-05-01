@@ -353,7 +353,7 @@ public class Chessboard2D extends ChessboardView
         
         Square tmpSquare = squares[activeSquare.getPozX()][activeSquare.getPozY()];
         
-        if (null != tmpSquare.piece)
+        if (null != tmpSquare.getPiece())
         {
             Set<Square> moves = tmpSquare.getPiece().getAllMoves();
             this.getChessboard().setMoves(moves);

@@ -18,12 +18,11 @@
  *
  * Created on 2009-10-20, 15:11:49
  */
-package jchess;
+package jchess.display.windows;
 
 import javax.swing.*;
 
 import jchess.utils.Settings;
-import jchess.display.windows.DrawLocalSettings;
 
 
 /**

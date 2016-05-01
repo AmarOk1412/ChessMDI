@@ -212,7 +212,7 @@ public class Moves extends AbstractTableModel
     		game.getGameClock().start();
     	}
         
-        if (end.piece != null)
+        if (end.getPiece() != null)
         {
             locMove += "x";//take down opponent piece
         }
@@ -232,7 +232,7 @@ public class Moves extends AbstractTableModel
             locMove += Integer.toString(8 - end.getPozY());//add number of Square to which move was made
         }
         
-        if (begin.getPiece().getSymbol().equals("") && begin.getPozX() - end.getPozX() != 0 && end.piece == null)
+        if (begin.getPiece().getSymbol().equals("") && begin.getPozX() - end.getPozX() != 0 && end.getPiece() == null)
         {
             locMove += "(e.p)";//pawn take down opponent en passant
             wasEnPassant = true;
@@ -264,7 +264,7 @@ public class Moves extends AbstractTableModel
 
         if (registerInHistory)
         {
-            Move moveToAdd = new Move(new Square(begin), new Square(end), begin.piece, end.piece, castlingMove, wasEnPassant, promotedPiece, duration, comment);
+            Move moveToAdd = new Move(new Square(begin), new Square(end), begin.getPiece(), end.getPiece(), castlingMove, wasEnPassant, promotedPiece, duration, comment);
             this.moveBackStack.add(moveToAdd);
         }
     }
@@ -592,7 +592,7 @@ public class Moves extends AbstractTableModel
                 {
                     for(int j=0; j<squares[i].length && !pieceFound; j++)
                     {
-                        if(squares[i][j].piece == null || this.game.getActivePlayer().getColor() != squares[i][j].getPiece().getPlayer().getColor())
+                        if(squares[i][j].getPiece() == null || this.game.getActivePlayer().getColor() != squares[i][j].getPiece().getPlayer().getColor())
                         {
                             continue;
                         }

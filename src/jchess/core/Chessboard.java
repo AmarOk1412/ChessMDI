@@ -236,10 +236,10 @@ public class Chessboard {
 			LOG.error("error moving piece: " + exc.getMessage());
 			return;
 		}
-		toSQ.piece = null;
-		toSQ.piece = fromSQ.getPiece();
-		fromSQ.piece.setSquare(toSQ);
-		fromSQ.piece = null;
+		toSQ.setPiece(null);
+		toSQ.setPiece(fromSQ.getPiece());
+		fromSQ.getPiece().setSquare(toSQ);
+		fromSQ.setPiece(null);
 	}
 
 	/**
@@ -256,7 +256,7 @@ public class Chessboard {
 		Castling wasCastling = Castling.NONE;
 		Piece promotedPiece = null;
 		boolean wasEnPassant = false;
-		if (end.piece != null) {
+		if (end.getPiece() != null) {
 			end.getPiece().setSquare(null);
 		}
 
@@ -264,13 +264,13 @@ public class Chessboard {
 		Square tempEnd = new Square(end); // 4 moves history
 
 		begin.getPiece().setSquare(end);// set square of piece to ending
-		end.piece = begin.piece;// for ending square set piece from beginin
+		end.setPiece(begin.getPiece());// for ending square set piece from beginin
 								// square
-		begin.piece = null;// make null piece for begining square
+		begin.setPiece(null);// make null piece for begining square
 
 		if (end.getPiece().getName().equals("King")) {
-			if (!((King) end.piece).getWasMotioned()) {
-				((King) end.piece).setWasMotioned(true);
+			if (!((King) end.getPiece()).getWasMotioned()) {
+				((King) end.getPiece()).setWasMotioned(true);
 			}
 
 			// Castling
@@ -283,15 +283,15 @@ public class Chessboard {
 			}
 			// endOf Castling
 		} else if (end.getPiece().getName().equals("Rook")) {
-			if (!((Rook) end.piece).getWasMotioned()) {
-				((Rook) end.piece).setWasMotioned(true);
+			if (!((Rook) end.getPiece()).getWasMotioned()) {
+				((Rook) end.getPiece()).setWasMotioned(true);
 			}
 		} else if (end.getPiece().getName().equals("Pawn")) {
 			if (getTwoSquareMovedPawn() != null
 					&& getSquares()[end.getPozX()][begin.getPozY()] == getTwoSquareMovedPawn().getSquare()) // en
 																											// passant
 			{
-				tempEnd.piece = getSquares()[end.getPozX()][begin.getPozY()].piece; // ugly
+				tempEnd.setPiece(getSquares()[end.getPozX()][begin.getPozY()].getPiece()); // ugly
 																					// hack
 																					// -
 																					// put
@@ -305,7 +305,7 @@ public class Chessboard {
 																					// end
 																					// square
 
-				squares[end.pozX][begin.pozY].piece = null;
+				squares[end.pozX][begin.pozY].setPiece(null);
 				wasEnPassant = true;
 			}
 
@@ -313,7 +313,7 @@ public class Chessboard {
 																								// two
 																								// square
 			{
-				twoSquareMovedPawn = (Pawn) end.piece;
+				twoSquareMovedPawn = (Pawn) end.getPiece();
 			} else {
 				twoSquareMovedPawn = null; // erase last saved move (for En
 											// passant)
@@ -353,8 +353,8 @@ public class Chessboard {
 					piece.setChessboard(end.getPiece().getChessboard());
 					piece.setPlayer(end.getPiece().getPlayer());
 					piece.setSquare(end.getPiece().getSquare());
-					end.piece = piece;
-					promotedPiece = end.piece;
+					end.setPiece(piece);
+					promotedPiece = end.getPiece();
 				}
 			}
 		} else if (!end.getPiece().getName().equals("Pawn")) {
@@ -403,11 +403,11 @@ public class Chessboard {
 				this.move(this.getSquares()[from.getPozX()][from.getPozY()],
 						this.getSquares()[to.getPozX()][to.getPozY()], true, false);
 				if (first.getPromotedPiece() != null) {
-					Pawn pawn = (Pawn) this.getSquares()[to.getPozX()][to.getPozY()].piece;
+					Pawn pawn = (Pawn) this.getSquares()[to.getPozX()][to.getPozY()].getPiece();
 					pawn.setSquare(null);
 
-					this.squares[to.pozX][to.pozY].piece = first.getPromotedPiece();
-					Piece promoted = this.getSquares()[to.getPozX()][to.getPozY()].piece;
+					this.squares[to.pozX][to.pozY].setPiece(first.getPromotedPiece());
+					Piece promoted = this.getSquares()[to.getPozX()][to.getPozY()].getPiece();
 					promoted.setSquare(this.getSquares()[to.getPozX()][to.getPozY()]);
 				}
 				return true;
@@ -430,7 +430,7 @@ public class Chessboard {
 			Square end = last.getTo();
 			try {
 				Piece moved = last.getMovedPiece();
-				this.squares[begin.pozX][begin.pozY].piece = moved;
+				this.squares[begin.pozX][begin.pozY].setPiece(moved);
 
 				moved.setSquare(this.getSquares()[begin.getPozX()][begin.getPozY()]);
 
@@ -438,15 +438,15 @@ public class Chessboard {
 				if (last.getCastlingMove() != Castling.NONE) {
 					Piece rook = null;
 					if (last.getCastlingMove() == Castling.SHORT_CASTLING) {
-						rook = this.getSquares()[end.getPozX() - 1][end.getPozY()].piece;
-						this.squares[7][begin.pozY].piece = rook;
+						rook = this.getSquares()[end.getPozX() - 1][end.getPozY()].getPiece();
+						this.squares[7][begin.pozY].setPiece(rook);
 						rook.setSquare(this.getSquares()[7][begin.getPozY()]);
-						this.squares[end.pozX - 1][end.pozY].piece = null;
+						this.squares[end.pozX - 1][end.pozY].setPiece(null);
 					} else {
-						rook = this.getSquares()[end.getPozX() + 1][end.getPozY()].piece;
-						this.squares[0][begin.pozY].piece = rook;
+						rook = this.getSquares()[end.getPozX() + 1][end.getPozY()].getPiece();
+						this.squares[0][begin.pozY].setPiece(rook);
 						rook.setSquare(this.getSquares()[0][begin.getPozY()]);
-						this.squares[end.pozX + 1][end.pozY].piece = null;
+						this.squares[end.pozX + 1][end.pozY].setPiece(null);
 					}
 					((King) moved).setWasMotioned(false);
 					((Rook) rook).setWasMotioned(false);
@@ -454,13 +454,13 @@ public class Chessboard {
 					((Rook) moved).setWasMotioned(false);
 				} else if (moved.getName().equals("Pawn") && last.wasEnPassant()) {
 					Pawn pawn = (Pawn) last.getTakenPiece();
-					this.squares[end.pozX][begin.pozY].piece = pawn;
+					this.squares[end.pozX][begin.pozY].setPiece(pawn);
 					pawn.setSquare(this.getSquares()[end.getPozX()][begin.getPozY()]);
 
 				} else if (moved.getName().equals("Pawn") && last.getPromotedPiece() != null) {
-					Piece promoted = this.getSquares()[end.getPozX()][end.getPozY()].piece;
+					Piece promoted = this.getSquares()[end.getPozX()][end.getPozY()].getPiece();
 					promoted.setSquare(null);
-					this.squares[end.pozX][end.pozY].piece = null;
+					this.squares[end.pozX][end.pozY].setPiece(null);
 				}
 
 				// check one more move back for en passant
@@ -474,10 +474,10 @@ public class Chessboard {
 				}
 
 				if (taken != null && !last.wasEnPassant()) {
-					this.squares[end.pozX][end.pozY].piece = taken;
+					this.squares[end.pozX][end.pozY].setPiece(taken);
 					taken.setSquare(this.getSquares()[end.getPozX()][end.getPozY()]);
 				} else {
-					this.squares[end.pozX][end.pozY].piece = null;
+					this.squares[end.pozX][end.pozY].setPiece(null);
 				}
 
 				if (refresh) {

@@ -155,14 +155,14 @@ public class King extends Piece
 	 */
 	public boolean willBeSafeAfterMove(Square currentSquare, Square futureSquare)
 	{
-		Piece tmp = futureSquare.piece;
-		futureSquare.piece  = currentSquare.piece;
-		currentSquare.piece = null;
+		Piece tmp = futureSquare.getPiece();
+		futureSquare.setPiece(currentSquare.getPiece());
+		currentSquare.setPiece(null);
 
-		boolean ret = (futureSquare.piece.equals(this))? isSafe(futureSquare) : isSafe(this.getSquare());
+		boolean ret = (futureSquare.getPiece().equals(this))? isSafe(futureSquare) : isSafe(this.getSquare());
 
-		currentSquare.piece = futureSquare.piece;
-		futureSquare.piece  = tmp;
+		currentSquare.setPiece(futureSquare.getPiece());
+		futureSquare.setPiece(tmp);
 
 		return ret;
 	}

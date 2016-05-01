@@ -533,13 +533,13 @@ public class Game extends JPanel implements ComponentListener, MouseListener
                     int y = event.getY();//get Y position of mouse
 
                     sq = getChessboard().getChessboardView().getSquare(x, y);
-                    if ((sq == null && sq.piece == null && getChessboard().getActiveSquare() == null)
-                            || (this.getChessboard().getActiveSquare() == null && sq.piece != null && sq.getPiece().getPlayer() != this.activePlayer))
+                    if ((sq == null && sq.getPiece() == null && getChessboard().getActiveSquare() == null)
+                            || (this.getChessboard().getActiveSquare() == null && sq.getPiece() != null && sq.getPiece().getPlayer() != this.activePlayer))
                     {
                         return;
                     }
 
-                    if (sq.piece != null && sq.getPiece().getPlayer() == this.activePlayer && sq != getChessboard().getActiveSquare())
+                    if (sq.getPiece() != null && sq.getPiece().getPlayer() == this.activePlayer && sq != getChessboard().getActiveSquare())
                     {
                         getChessboard().unselect();
                         getChessboard().select(sq);
@@ -548,7 +548,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
                     {
                         getChessboard().unselect();
                     }
-                    else if (getChessboard().getActiveSquare() != null && getChessboard().getActiveSquare().piece != null
+                    else if (getChessboard().getActiveSquare() != null && getChessboard().getActiveSquare().getPiece() != null
                             && getChessboard().getActiveSquare().getPiece().getAllMoves().contains(sq)) //move
                     {
                         if (getSettings().getGameType() == Settings.gameTypes.local)

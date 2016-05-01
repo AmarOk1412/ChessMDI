@@ -19,9 +19,9 @@ public abstract class MoveBuilder {
 	protected Chessboard _board;
 
 	public void move() throws Exception {
-		if(_board.getSquare(_xFrom, _yFrom).piece == null)
+		if(_board.getSquare(_xFrom, _yFrom).getPiece() == null)
 			throw new NoPieceException("No piece at square: " + _xFrom + "/" + _yFrom);
-		if(!_board.getSquare(_xFrom, _yFrom).piece.canMove(_xTo, _yTo))
+		if(!_board.getSquare(_xFrom, _yFrom).getPiece().canMove(_xTo, _yTo))
 			throw new NoPieceException("Piece can't move to : " + _xTo + "/" + _yTo);
 		_board.testMove(_xFrom, _yFrom, _xTo, _yTo);
 	}

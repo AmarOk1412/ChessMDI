@@ -38,7 +38,7 @@ public class Square
     /**
      * object Piece on square (and extending Piecie)
      */
-    public Piece piece = null;
+    private Piece piece = null;
     
     public Square()
     {

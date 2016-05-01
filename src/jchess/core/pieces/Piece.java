@@ -168,12 +168,12 @@ public abstract class Piece
      * */
     public boolean checkPiece(int x, int y)
     {
-        if (getChessboard().getSquares()[x][y].piece != null
+        if (getChessboard().getSquares()[x][y].getPiece() != null
                 && getChessboard().getSquares()[x][y].getPiece().getName().equals("King"))
         {
             return false;
         }
-        Piece piece = getChessboard().getSquares()[x][y].piece;
+        Piece piece = getChessboard().getSquares()[x][y].getPiece();
         if (piece == null || //if this sqhuare is empty
                 piece.getPlayer() != this.getPlayer()) //or piece is another player
         {
@@ -190,7 +190,7 @@ public abstract class Piece
     public boolean otherOwner(int x, int y)
     {
         Square sq = getChessboard().getSquares()[x][y];
-        if (sq.piece == null)
+        if (sq.getPiece() == null)
         {
             return false;
         }

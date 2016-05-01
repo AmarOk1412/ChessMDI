@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import jchess.utils.GUI;
 import jchess.utils.Settings;
+import jchess.display.windows.EditGameWindow;
 import jchess.display.windows.JChessAboutBox;
 import jchess.display.windows.PawnPromotionWindow;
 import jchess.display.windows.ThemeChooseWindow;
