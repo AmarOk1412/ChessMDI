@@ -18,7 +18,12 @@ import jchess.utils.GUI;
  */
 public abstract class ChessboardView extends JPanel
 {
-    private static final int CENTER_POSITION = 3;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final int CENTER_POSITION = 3;
     
     /*
      * image of chessboard

@@ -15,23 +15,29 @@
 
 package jchess.core;
 
-import jchess.core.pieces.implementation.King;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.BufferedReader;
-import java.io.FileWriter;
+import java.io.File;
 import java.io.FileReader;
-import java.util.Calendar;
-import java.awt.event.ComponentListener;
-import java.awt.event.WindowEvent;
-import org.apache.log4j.Logger;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+
+import org.apache.log4j.Logger;
+
 import jchess.JChessApp;
 import jchess.core.moves.Moves;
+import jchess.core.pieces.implementation.King;
 import jchess.display.panels.LocalSettingsView;
 import jchess.display.views.chessboard.ChessboardView;
 import jchess.utils.Settings;
@@ -48,8 +54,9 @@ import jchess.utils.Settings;
  */
 public class Game extends JPanel implements ComponentListener, MouseListener
 {
-    
-    private static final Logger LOG = org.apache.log4j.Logger.getLogger(Game.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOG = org.apache.log4j.Logger.getLogger(Game.class);
     
     /**
      * Settings object of the current game
@@ -90,6 +97,8 @@ public class Game extends JPanel implements ComponentListener, MouseListener
    
     protected LocalSettingsView localSettingsView;
     private ChessboardView chessboardView;
+
+	private Square sq;
 
     public Game()
     {
@@ -527,7 +536,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
                     int x = event.getX();//get X position of mouse
                     int y = event.getY();//get Y position of mouse
 
-                    Square sq = getChessboard().getChessboardView().getSquare(x, y);
+                    sq = getChessboard().getChessboardView().getSquare(x, y);
                     if ((sq == null && sq.piece == null && getChessboard().getActiveSquare() == null)
                             || (this.getChessboard().getActiveSquare() == null && sq.piece != null && sq.getPiece().getPlayer() != this.activePlayer))
                     {
@@ -737,4 +746,5 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 }
 class ReadGameError extends Exception
 {
+	private static final long serialVersionUID = 1L;
 }

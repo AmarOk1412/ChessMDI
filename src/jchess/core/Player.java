@@ -23,6 +23,9 @@ package jchess.core;
 
 import java.io.Serializable;
 import java.security.SecureRandom;
+
+import jchess.core.computerai.ComputerPlayer;
+
 import java.math.BigInteger;
 
 
@@ -31,13 +34,14 @@ import java.math.BigInteger;
  */
 public class Player implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private Colors color;
-    private playerTypes playerType; //TODO: Useful ?
-    public boolean goDown; //TODO: Move
+    private playerTypes playerType;
+    public boolean goDown;
     private ComputerPlayer _computer;
 
-    public enum playerTypes //TODO: Useful ?
+    public enum playerTypes
     {
         localUser, networkUser, computer
     }
@@ -53,7 +57,7 @@ public class Player implements Serializable
         this.name = new BigInteger(8, random).toString() + "_" + color;
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
-        this.playerType = this.playerType.localUser;
+        this.playerType = playerTypes.localUser;
         this._computer = null;
     }
 
@@ -67,7 +71,7 @@ public class Player implements Serializable
         this.name = name;
         this.color = Colors.valueOf(color.toUpperCase());
         this.goDown = false;
-        this.playerType = this.playerType.localUser;
+        this.playerType = playerTypes.localUser;
         this._computer = null;
     }
 

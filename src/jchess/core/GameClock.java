@@ -31,7 +31,9 @@ import org.apache.log4j.Logger;
  */
 public class GameClock extends JPanel implements Runnable
 {
-    private static final Logger LOG = org.apache.log4j.Logger.getLogger(GameClock.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOG = org.apache.log4j.Logger.getLogger(GameClock.class);
 
     public Clock clock1;
     public Clock clock2;
@@ -39,10 +41,8 @@ public class GameClock extends JPanel implements Runnable
     private Settings settings;
     private Thread thread;
     private Game game;
-    private Graphics g;
     private String white_clock, black_clock;
     private BufferedImage background;
-    private Graphics bufferedGraphics;
     private int time4game = 0;
 
 	private boolean _isRunning;
@@ -121,7 +121,7 @@ public class GameClock extends JPanel implements Runnable
         g2d.drawString(settings.getPlayerWhite().getName(), 10, 50);
         g2d.setColor(Color.WHITE);
         g2d.drawString(settings.getPlayerBlack().getName(), 100, 50);
-        this.bufferedGraphics = this.background.getGraphics();
+        this.background.getGraphics();
     }
 
     /**
@@ -210,10 +210,11 @@ public class GameClock extends JPanel implements Runnable
      */
     private void setPlayers(Player p1, Player p2)
     {
-        /*in documentation it's called 'setPlayer' but when we've 'setTimes' better to use
+        p1.getColor();
+		/*in documentation it's called 'setPlayer' but when we've 'setTimes' better to use
          * one convention of naming methods - this've to be repaired in documentation by Wąsu:P
         dojdziemy do tego:D:D:D*/
-        if (p1.getColor() == p1.getColor().WHITE)
+        if (p1.getColor() == Colors.WHITE)
         {
             this.clock1.setPlayer(p1);
             this.clock2.setPlayer(p2);
@@ -238,14 +239,12 @@ public class GameClock extends JPanel implements Runnable
                     repaint();
                     try
                     {
-                        thread.sleep(1000);
+                        Thread.sleep(1000);
                     }
                     catch (InterruptedException e)
                     {
                         LOG.error("Some error in gameClock thread: " + e);
                     }
-                    //if(this.game.blockedChessboard)
-                    //  this.game.blockedChessboard = false;
                 }
                 if (this.runningClock != null && this.runningClock.getLeftTime() == 0)
                 {

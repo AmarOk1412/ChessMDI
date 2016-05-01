@@ -17,10 +17,10 @@ package jchess.display.windows;
 
 import jchess.JChessApp;
 import jchess.core.Game;
-import jchess.core.GloutonComputerPlayer;
-import jchess.core.MinMaxComputerPlayer;
 import jchess.core.Player;
-import jchess.core.RandomComputerPlayer;
+import jchess.core.computerai.GloutonComputerPlayer;
+import jchess.core.computerai.MinMaxComputerPlayer;
+import jchess.core.computerai.RandomComputerPlayer;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

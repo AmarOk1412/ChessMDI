@@ -4,7 +4,6 @@ import jchess.core.Chessboard;
 import jchess.core.Player;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.traits.behaviors.implementation.ArrowBehavior;
-import jchess.core.pieces.traits.behaviors.implementation.BishopBehavior;
 
 public class Arrow extends Piece
 {

@@ -35,7 +35,7 @@ import jchess.core.pieces.traits.behaviors.Behavior;
 public abstract class Piece
 {
 
-    protected Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
+    protected Chessboard chessboard;
     
     protected Square square;
     
