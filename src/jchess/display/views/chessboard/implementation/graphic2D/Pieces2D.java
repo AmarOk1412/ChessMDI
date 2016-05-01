@@ -112,8 +112,7 @@ public class Pieces2D
     
     private static Map<String, Image> getPieceMap(Colors color, int size)
     {
-        Map<String, Image> result = new HashMap<>();  
-        //TODO
+        Map<String, Image> result = new HashMap<>();
         result.put(Pawn.class.getName(), GUI.loadPieceImage(Pawn.class.getSimpleName(), color, size, FILE_EXT));
         result.put(Knight.class.getName(), GUI.loadPieceImage(Knight.class.getSimpleName(), color, size, FILE_EXT));
         result.put(Queen.class.getName(), GUI.loadPieceImage(Queen.class.getSimpleName(), color, size, FILE_EXT));

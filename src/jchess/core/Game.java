@@ -139,10 +139,6 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         chessboardView.addMouseListener(this);
         this.addComponentListener(this);
     }
-    
-    public void reset() {
-        //TODO: Not implemented yet
-    }
 
     /** Method to save actual state of game
      * @param path address of place where game will be saved

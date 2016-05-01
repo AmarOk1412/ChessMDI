@@ -45,7 +45,7 @@ public abstract class Piece
     
     protected String symbol;
     
-    protected short value = 0;
+    protected final int value = 0;
     
     protected Set<Behavior> behaviors = new HashSet<>();
 
@@ -58,15 +58,7 @@ public abstract class Piece
     }
     /* Method to draw piece on chessboard
      * @graph : where to draw
-     */
-    
-    /**
-     * @return the value
-     */
-    public short getValue()
-    {
-        return value;
-    }        
+     */    
     
     public void addBehavior(Behavior behavior)
     {
@@ -276,5 +268,9 @@ public abstract class Piece
     public void setName(String name)
     {
         this.name = name;
+    }
+    
+    public int getScore() {
+    	return 0;
     }
 }

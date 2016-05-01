@@ -47,7 +47,7 @@ public class King extends Piece
 
 	protected boolean wasMotioned = false;
 
-	protected static final short value = 99;
+	protected static final int value = 99;
 
 	public King(Chessboard chessboard, Player player)
 	{
@@ -181,5 +181,10 @@ public class King extends Piece
 	public void setWasMotioned(boolean wasMotioned)
 	{
 		this.wasMotioned = wasMotioned;
+	}
+
+	@Override
+	public int getScore() {
+		return value;
 	}
 }

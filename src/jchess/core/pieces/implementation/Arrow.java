@@ -7,7 +7,7 @@ import jchess.core.pieces.traits.behaviors.implementation.ArrowBehavior;
 
 public class Arrow extends Piece
 {
-    protected final short value = 3;
+    protected final int value = 3;
 
 	public Arrow(Chessboard chessboard, Player player) {
 		super(chessboard, player);
@@ -15,4 +15,8 @@ public class Arrow extends Piece
         this.addBehavior(new ArrowBehavior(this));
 	}
 
+	@Override
+	public int getScore() {
+		return value;
+	}
 }

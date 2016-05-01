@@ -28,7 +28,7 @@ public class RandomComputerPlayer extends ComputerPlayer {
 		Square fromSquare = pieceToMove.getSquare() ;
 		Square endSquare = endSquares.get(0);
 		//Move
-		System.out.println(_color + ": Move " + pieceToMove.getName() 
+		Chessboard.LOG.debug(_color + ": Move " + pieceToMove.getName() 
 		+ " : from " + fromSquare.getPozX() + "-" + fromSquare.getPozY()
 		+ " : to " + endSquare.getPozX() + "-" + endSquare.getPozY());
 		board.move(fromSquare, endSquare);

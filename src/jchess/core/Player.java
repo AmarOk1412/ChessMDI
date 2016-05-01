@@ -131,6 +131,5 @@ public class Player implements Serializable
     {
     	if(_computer != null)
     		_computer.move(board);
-    	//TODO log else
     }
 }

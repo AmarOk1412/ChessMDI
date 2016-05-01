@@ -103,7 +103,7 @@ public class KingBehavior extends Behavior
                     && king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece().getName().equals("Rook"))
             {
                 boolean canCastling = true;
-                //TODO if width!=7 ?
+                //if we are not in the classical move we can't cast
                 Rook rook = (Rook) king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece();
                 if (!rook.getWasMotioned()) //if king was not moves before and is not checked
                 {

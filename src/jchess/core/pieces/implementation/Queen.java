@@ -41,7 +41,7 @@ import jchess.core.pieces.traits.behaviors.implementation.RookBehavior;
  */
 public class Queen extends Piece
 {
-    protected final short value = 10;
+    protected final int value = 10;
 
     public Queen(Chessboard chessboard, Player player)
     {
@@ -49,6 +49,11 @@ public class Queen extends Piece
         this.symbol = "Q";
         this.addBehavior(new RookBehavior(this));
         this.addBehavior(new BishopBehavior(this));
+    }
+    
+    @Override
+    public int getScore() {
+    	return value;
     }
     
 }

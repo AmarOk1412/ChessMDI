@@ -230,7 +230,6 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 	}
 
 	public Game addNewTab(String title) {
-		System.out.println("TODO");
 		Game newGUI = new Game();
 		this.gamesPane.addTab(title, newGUI);
 		return newGUI;

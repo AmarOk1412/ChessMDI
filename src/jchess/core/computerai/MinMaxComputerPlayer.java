@@ -17,13 +17,6 @@ import jchess.core.Chessboard;
 import jchess.core.Colors;
 import jchess.core.Square;
 import jchess.core.pieces.Piece;
-import jchess.core.pieces.implementation.Arrow;
-import jchess.core.pieces.implementation.Bishop;
-import jchess.core.pieces.implementation.King;
-import jchess.core.pieces.implementation.Knight;
-import jchess.core.pieces.implementation.Pawn;
-import jchess.core.pieces.implementation.Queen;
-import jchess.core.pieces.implementation.Rook;
 
 public class MinMaxComputerPlayer extends ComputerPlayer {
 
@@ -112,19 +105,8 @@ public class MinMaxComputerPlayer extends ComputerPlayer {
 
             			int scorePiece = 0;
             			Piece future = sq.getPiece();
-            			
-            			if(future instanceof Pawn)
-            				scorePiece = 1;
-            			else if(future instanceof Bishop || 
-            					future instanceof Knight ||
-            					future instanceof Arrow)
-            				scorePiece = 3;
-            			else if(future instanceof Rook)
-            				scorePiece = 5;
-            			else if(future instanceof Queen)
-            				scorePiece = 10;
-            			else if(future instanceof King)
-            				scorePiece = 1000;
+            			if(future != null)
+            				scorePiece = future.getScore();
             			
             			if(scorePiece > result)
             				result = scorePiece;
@@ -144,19 +126,8 @@ public class MinMaxComputerPlayer extends ComputerPlayer {
 			Entry<Piece, Square> pieceAndSquare = iter.next();
 			int scorePiece = 0;
 			Piece future = pieceAndSquare.getValue().getPiece();
-			
-			if(future instanceof Pawn)
-				scorePiece = 1;
-			else if(future instanceof Bishop || 
-					future instanceof Knight ||
-					future instanceof Arrow)
-				scorePiece = 3;
-			else if(future instanceof Rook)
-				scorePiece = 5;
-			else if(future instanceof Queen)
-				scorePiece = 10;
-			else if(future instanceof King)
-				scorePiece = 1000;
+			if(future != null)
+				scorePiece = future.getScore();
 			
 			if(maxScore < scorePiece) {
 				maxScore = scorePiece;
