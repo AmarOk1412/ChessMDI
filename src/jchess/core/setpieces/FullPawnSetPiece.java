@@ -15,10 +15,10 @@ public class FullPawnSetPiece extends SetPieces  {
 
 	@Override
 	public void setPieces4NewGame(Player plWhite, Player plBlack) {
-        this.setKingLine(0, plWhite);
-        this.setPawns4NewGame(1, plWhite);
-        this.setKingLine(_chessboardSize-1, plBlack);
-        this.setPawns4NewGame(_chessboardSize-2, plBlack);
+        this.setKingLine(0, plBlack);
+        this.setPawns4NewGame(1, plBlack);
+        this.setKingLine(_chessboardSize-1, plWhite);
+        this.setPawns4NewGame(_chessboardSize-2, plWhite);
 	}
 	
 	/**  
