@@ -43,39 +43,60 @@
 	\section{Au commencement}
 	\label{sec:Au commencement}
 	Le diagramme UML du projet étant plutôt massif, il ne sera pas inclu pour des soucis de lisibilité directement dans ce rapport. Vous pouvez le trouver à l'url suivante~: \url{https://github.com/AmarOk1412/ChessMDI/blob/master/uml/diagramme.png?raw=true}.\\
-	Dans ce projet, plusieurs design pattern sont déjà en place. On peut noter la présence d'un design pattern \emph{Composite} pour les \emph{Behavior}, ce qui permet de composer des mouvement avec d'autres mouvement. Ce design pattern est adapté lorsqu'on souhaite traiter tout un groupe d'objet de la même manière (ici comme des comportements). Il est composé de 3 classes. Le Component (ici Behavior) avec une méthode (par exemple \emph{getSquaresInRange()}), un composite (qui hérite de component. Ici la reine se sert de différentes behavior) et de feuilles (ici les différentes classes héritant de \emph{Behavior}).\\
-	De plus, des design pattern \emph{Observer} sont mis en place pour les différentes interactions avec l'interface. Parfois, un patron \emph{Command} aurait été plus adapté, mais il s'agit de la librairie graphique de base.\\
-	Un design pattern de type \emph{Template} est présent pour les différentes classes héritant de Piece. Ce qui permet de faire la bonne action en fonction de la pièce.\\
+	Dans ce projet, plusieurs design pattern sont déjà en place. On peut noter la présence d'un design pattern \emph{Template} pour les \emph{Behavior}, ce qui permet d'avoir la même fonctionnalité dans toute les sous classes (ici \emph{getSquaresInRange()}). Ce design pattern est adapté lorsqu'on souhaite traiter tout un groupe d'objet de la même manière (ici comme des comportements). Il est composé de 2 classes. Une classe abstraite (ici \emph{Behavior}) avec une méthode (par exemple \emph{getSquaresInRange()}), et d'une classe concrète qui en hérite (ici les différentes classes héritant de \emph{Behavior}). Un design pattern de type \emph{Template} est présent pour les différentes classes héritant de Piece. Ce qui permet de faire la bonne action en fonction de la pièce.\\
+	Un design pattern de type \emph{Composite} est présent pour les éléments graphiques. Ce design pattern est composé de 3 classes. Une classe component, élément de base abstrait ; une classe composite qui est une classe pouvant contenir des autres components (par exemple ici \emph{javax.swing.GroupLayout} ; et une classe feuille, qui ne peuvent pas contenir d'autres components même si à priori ici, toutes les classes peuvent contenir des components (\emph{JLabel, JProgressBar, etc}).\\
+	De plus, des design pattern \emph{Observer} sont mis en place pour les différentes interactions avec l'interface. Cette mis en place se fait via des fonctions comme \emph{addActionListener} qui activent des évènements. Ce design pattern est composé d'une classe \emph{Observer} (interne à swing ici) et de sujets qui s'incrivent a des évènements (ici \emph{JChessView} par exemple). Parfois, un patron \emph{Command} aurait été plus adapté, mais il s'agit de l'implémentation de la librairie graphique de base.\\
 	Enfin un design pattern \emph{Singleton} est présent pour la classe \emph{Pieces2D}. Ce design pattern consiste a rendre le constructeur privé afin d'éviter la création de multiples instances et avoir une fonction pour n'obtenir qu'une seule instance d'une classe. Dans ce code il aurait pu être utilisé plus souvent (par exemple pour la classe \emph{JChessView}).
 
 	\section{Bugs de déplacement}
 	\label{sec:Bugs de deplacement}
-	Plusieurs bugs de déplacement ont été trouvé dans le projet. Le premier concerne le fou qui ne peut se déplacer que sur une seule diagonale (ainsi que la reine qui utilisait la même Behavior).\\
-	Un second bug dans le déplacement est le fait que le roi pouvait se déplacer dans une position où il était en échec tout en devenant échec et mat au second tour.
+	Plusieurs bugs de déplacement ont été trouvé dans le projet. Le premier concerne le fou qui ne pouvait pas se déplacer sur une diagonale (ainsi que la reine qui utilisait la même Behavior). Il s'agissait d'une ligne commentée~:
+	\begin{minted}{java}
+		//list.addAll(getMovesForDirection(DIRECTION_RIGHT,  DIRECTION_UP)); //right-up
+	\end{minted}
+	Un second bug dans le déplacement est le fait que le roi pouvait se déplacer dans une position où il était en échec tout en devenant échec et mat au second tour, l'erreur venant de \emph{willBeSafeAfterMove()}.
 	\begin{center}
 		\includegraphics[scale=0.5]{img/Badmat}
 		\label{Badmat}
 	\end{center}
-	Des cas de tests ont été ajoutés dans le fichier de test.
+	Des cas de tests ont été ajoutés dans le fichier de test pour vérifier le bon déplacement de toutes les pièces.
 
 	\section{Monteur pour la visibilité}
 	\label{sec:Monteur pour la visibilite}
 	Dans le package \emph{jchess.core.Moves}, j'ai décidé de mettre en place un pattern design \emph{Builder} couplé avec un design pattern \emph{Strategy}. Le premier me permet de construire un objet par chaînage. Ainsi les méthodes from/to retournent une instance de ce même objet, comme par exemple~:
 	\begin{minted}{java}
 		public AlgebricChainMove from(String value)
+	  {
+	  	if(value.length() != 2)
+	  	{
+	   		LOG.error("from value incorrecte : " + value );
+	   		return this;
+	   	}
+	   	int index = _horizontal.indexOf(value.getBytes()[0]);
+	  	this._xFrom = index;
+	   	index = _vertical.indexOf(value.getBytes()[1]);
+	   	this._yFrom = index;
+	   	return this;
+	  }
 	\end{minted}
 	Ce qui donne en exemple concret~:
 	\begin{minted}{java}
 		new AlgebricChainMove(board).from("d2").to("d4").move();
 	\end{minted}
-	De plus, le second pattern permet de choisir la solution d'écriture de mouvement que l'on souhaite. On a le choix entre 2 méthodes. \emph{AlgebricChainMove} et \emph{NumericChainMove}. Les 2 solutions utilisent la méthode move définie dans la classe abstraite. \emph{MoveBuilder}.
+	De plus, le second pattern permet de choisir la solution d'écriture de mouvement que l'on souhaite. On a le choix entre 2 méthodes. \emph{AlgebricChainMove} et \emph{NumericChainMove}. Les 2 solutions utilisent la méthode move définie dans la classe abstraite \emph{MoveBuilder}. Ces 2 classes créées ne sont utilisées que pour les tests dans mon projet. En effet, ces classes rendent les tests beaucoup plus lisibles et simple d'écriture. Mais elles sont peu adaptées pour l'utilisation dans le reste du code.
 
 	\section{Variantes}
 	\label{sec:Variantes}
 
-	Pour la variante des tailles, il a falu reprendre la gestion de la taille de l'échequier un peu partout dans le code en modifiants les tailles hardcodées en \emph{chessboard.getSize()}.\\
-	La nouvelle pièce (Arrow) créée a été définie sur le même modèle que toutes les autres pièces (dans les packages \emph{piece} et \emph{behavior}).\\
-	Un pattern \emph{Strategy} a été implémenté pour le choix du mode. 3 modes ont été développés (Mode classique (où il faut une taille de 8), mode aléatoire (n'importe quelle taille) et mode pions (n'importe quelle taille)). Chaque mode hérite d'une classe abstraite \emph{jchess.core.setpieces.SetPieces} et implémente la méthode~:
+	Pour la variante des tailles, j'ai du reprendre la gestion de la taille de l'échequier un peu partout dans le code en modifiants les tailles hardcodées (généralement par les chiffres 7 et 8 (taille et taille-1)) en \emph{chessboard.getSize()}.\\
+	La nouvelle pièce (Arrow) créée a été définie sur le même modèle que toutes les autres pièces (dans les packages \emph{piece} et \emph{behavior}). Cette nouvelle pièce peut se déplacer tout droit vers l'avant, et une case derrière ou sur les côtés.\\
+	Un pattern \emph{Strategy} a été implémenté pour le choix du mode. 3 modes ont été développés~:
+	\begin{itemize}
+		\item Le mode classique (où il faut une taille de 8, même si l'expérience utilisateur aurait pu être améliorée de ce côté)
+		\item Le mode aléatoire (n'importe quelle taille), où les pièces sont placées aléatoirement.
+		\item Le mode pions (n'importe quelle taille)), où la partie se réalise pion vs pion (et un roi). On peut obtenir d'autres pièces avec une promotion.
+	\end{itemize}
+	Chaque mode hérite d'une classe abstraite \emph{jchess.core.setpieces.SetPieces} et implémente la méthode~:
 	\begin{minted}{java}
 		public abstract void setPieces4NewGame(Player plWhite, Player plBlack);
 	\end{minted}
@@ -126,7 +147,7 @@
 
 	\section{AI}
 	\label{sec:AI}
-	Ici encore, un design apttern de type \emph{Strategy} a été mis en place pour implémenter les différentes intelligences. Ces classes sont visibles dans le package \emph{jchess.core.computerai}. Ici chaque classe héritant doit implémenter la méthode~:
+	Ici encore, un design pattern de type \emph{Strategy} a été mis en place pour implémenter les différentes intelligences. Ces classes sont visibles dans le package \emph{jchess.core.computerai}. Ici chaque classe héritant doit implémenter la méthode~:
 	\begin{minted}{java}
 		public abstract void move(Chessboard board);
 	\end{minted}
@@ -135,11 +156,17 @@
 		\includegraphics[scale=0.5]{img/AI}
 		\label{AI}
 	\end{center}
-
+	Au final, 3 niveaux ont été implémentés~:
+	\begin{itemize}
+		\item Le mode Random où les mouvements sont aléatoires.
+		\item Le mode Glouton, qui mange les pièces de l'adversaire dès qu'il le peut
+		\item Le mode MinMax, qui choisit le meilleur coup possible tout en nous rapportant le moins de points possible au tour suivant (joue avec un tour d'avance).
+	\end{itemize}
+	Note~: dans tous les cas il est difficile de perdre contre un de ces modes.
 	\section{Bilan}
 	\label{sec:Bilan}
-	Le diagramme UML du projet étant plutôt massif, il ne sera pas inclu directement dans ce rapport. Vous pouvez le trouver à l'url suivante~: \url{https://github.com/AmarOk1412/ChessMDI/blob/master/uml/final.png?raw=true}.\\
+	Le diagramme UML final du projet étant plutôt massif, il ne sera pas inclu directement dans ce rapport. Vous pouvez le trouver à l'url suivante~: \url{https://github.com/AmarOk1412/ChessMDI/blob/master/uml/final.png?raw=true}.\\
 	Dans ce projet, j'ai mis en place quelques design pattern comme \emph{Singleton} (Section \ref{sec:Au commencement}), \emph{Strategy} (Section \ref{sec:AI}), \emph{Builder} (Section \ref{sec:Monteur pour la visibilite}), \emph{Visitor} (Section \ref{sec:En visite}) et \emph{Decorator} (Section \ref{sec:Decoration}).\\
-	Au final, beaucoup de choses n'étaient pas bien implémenté au début et des fonctionnalités plantaient (bug de déplacement, de promotion, de mise en échec, de logging, des tests manquants, etc). La partie la moins compréhensible était le lancement de l'application où on ne voyait pas comment il lançait l'application.
-
+	Au final, beaucoup de choses n'étaient pas bien implémenté au début et des fonctionnalités plantaient (bug de déplacement, de promotion, de mise en échec, de logging, des tests manquants, etc). La partie la moins compréhensible était le lancement de l'application où on ne voyait pas comment il lançait l'application.\\
+	Enfin, l'intégralité du code est disponible sur \url{https://github.com/AmarOk1412/ChessMDI}.
 \end{document}
