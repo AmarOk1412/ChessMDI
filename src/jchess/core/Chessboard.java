@@ -634,6 +634,10 @@ public class Chessboard {
 	public Set<Square> getMoves() {
 		return moves;
 	}
+	
+	public Moves getChessMoves() {
+		return Moves;
+	}
 
 	/**
 	 * @param moves

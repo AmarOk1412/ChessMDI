@@ -275,7 +275,7 @@ public class TestPiece {
     	catch(Exception e)
     	{
     		System.out.println(e.getMessage());
-    		System.out.println("gagné, nul ou promotion");
+    		System.out.println("gagné ou nul");
     	}
     }
 }

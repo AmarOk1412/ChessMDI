@@ -76,7 +76,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     
     private String sizes[] =
     {
-        "8", "10", "12", "15", "20"
+        "8", "10", "12", "16", "20"
     };
 
     private String modes[] =

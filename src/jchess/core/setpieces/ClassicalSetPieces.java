@@ -20,6 +20,7 @@ public class ClassicalSetPieces extends SetPieces {
 	public void setPieces4NewGame(Player plWhite, Player plBlack) {
 		if(_chessboardSize != 8)
 		{
+			_chessboard.getChessMoves().getGame().endGame("The classical mode can't be played with size=" + _chessboardSize + " please change the mode");
 			Chessboard.LOG.error("ClassicalSetPieces can't setPieces4NewGame size != 8");
 			return;
 		}

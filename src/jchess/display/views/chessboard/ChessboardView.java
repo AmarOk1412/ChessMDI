@@ -22,8 +22,6 @@ public abstract class ChessboardView extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private static final int CENTER_POSITION = 3;
     
     /*
      * image of chessboard
@@ -151,7 +149,7 @@ public abstract class ChessboardView extends JPanel
     
     public int transposePosition(int squarePosition)
     {
-        return transposePosition(squarePosition, CENTER_POSITION);
+        return transposePosition(squarePosition, (chessboard.getSize()-1)/2);
     }
     
     public int transposePosition(int squarePosition, int centerPosition)
